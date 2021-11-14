@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - Sword
+  - ShotgunPoint
+  - FirePoint
+  - Barrel
+  - Wall
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Player
+  - 
+  - 
+  - Wall
+  - 
+  - Lava
+  - 
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background Props
+    uniqueID: 2813457149
+    locked: 0
+  - name: Background
+    uniqueID: 3322919559
+    locked: 0
+  - name: Wall
+    uniqueID: 3344973231
+    locked: 0
+  - name: Ground
+    uniqueID: 1494697053
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Lava
+    uniqueID: 3972838991
+    locked: 0
+  - name: Foreground Props
+    uniqueID: 3399540205
+    locked: 0
