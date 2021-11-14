@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1188914570352715257}
   - component: {fileID: 7543674843211478346}
   - component: {fileID: 3612425392126757869}
+  - component: {fileID: 2405487087177314568}
   m_Layer: 0
   m_Name: Explode Indicator
   m_TagString: Untagged
@@ -28,6 +29,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.0235, y: 0.1645, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 370691442826024060}
   m_RootOrder: 0
@@ -153,6 +155,26 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!95 &2405487087177314568
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29368364763577740}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a5ad681c95f1cca4eba3040d27369012, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &173642722642761957
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +189,7 @@ GameObject:
   - component: {fileID: 9032543195858012434}
   - component: {fileID: 2737088312399692674}
   - component: {fileID: 7829706342818347819}
-  - component: {fileID: 1555351732171441211}
+  - component: {fileID: 1052092036410049234}
   m_Layer: 0
   m_Name: Robo Spider
   m_TagString: Untagged
@@ -183,8 +205,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173642722642761957}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.872, y: 0.276, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1188914570352715257}
   m_Father: {fileID: 0}
@@ -230,7 +253,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 0954f992fa7f14a4ab5fed2b9992f947, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -301,10 +324,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fc637fe3989e894895868eb1a5051b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
+  moveSpeed: 1.75
   detectionRange: 3
   attackRange: 0.75
+  detonationDelay: 0.5
   explodeIndicator: {fileID: 29368364763577740}
+  explosionPrefab: {fileID: 5431315828934794082, guid: e5db30d29aad62940b4ae747c851d8b8, type: 3}
 --- !u!114 &7829706342818347819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,9 +345,9 @@ MonoBehaviour:
   health: 50
   weaponPoints: 500
   deathEffect: {fileID: 5431315828934794082, guid: e5db30d29aad62940b4ae747c851d8b8, type: 3}
---- !u!95 &1555351732171441211
+--- !u!95 &1052092036410049234
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -335,6 +360,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1

@@ -26,6 +26,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public bool Heal() {
+        if(currentHealth < health) {
+            currentHealth = health;
+            healthBar.SetHealth(currentHealth);
+            return true;
+        }
+        else
+            return false;
+    }
+
     void Respawn()
     {
         FindObjectOfType<GameManager>().EndGame();

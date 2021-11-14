@@ -5,13 +5,17 @@ using UnityEngine;
 public class RoboSpiderAI : MonoBehaviour
 {
     [SerializeField]
-    private float moveSpeed = 1.0f;
+    private float moveSpeed;
     [SerializeField]
-    private float detectionRange = 3.0f;
+    private float detectionRange;
     [SerializeField]
-    private float attackRange = 1.25f;
+    private float attackRange;
+    [SerializeField]
+    private float detonationDelay;
     [SerializeField]
     private GameObject explodeIndicator;
+    [SerializeField]
+    private GameObject explosionPrefab;
 
     private bool facingRight = false;
     private float targetDistance;
@@ -76,23 +80,23 @@ public class RoboSpiderAI : MonoBehaviour
 
     IEnumerator Explode() {
         explodeIndicator.SetActive(true);
-        
-        float normalSpeed = moveSpeed;
-        // moveSpeed = 2 * moveSpeed;
 
-        for (int i = 0; i < 2; i++) {
-            yield return new WaitForSeconds(0.25f);
-            explodeIndicator.GetComponent<UnityEngine.Rendering.Universal.Light2D>().intensity = 2.0f;
-            yield return new WaitForSeconds(0.25f);
-            explodeIndicator.GetComponent<UnityEngine.Rendering.Universal.Light2D>().intensity = 8.0f;
-        }
+        yield return new WaitForSeconds(detonationDelay);
         
         if (inAttackRange) {
-            FindObjectOfType<Enemy>().Explode();
+            Detonate();
         }
         else {
             explodeIndicator.SetActive(false);
-            // moveSpeed = normalSpeed;
         }
+
+    }
+
+    void Detonate() {
+        SoundManagerScript.PlaySound("enemyDeath");
+        Destroy(gameObject);
+
+        GameObject deathEffectObject = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Destroy(deathEffectObject, 0.4f);
     }
 }

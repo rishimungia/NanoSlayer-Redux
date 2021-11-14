@@ -36,12 +36,4 @@ public class Enemy : MonoBehaviour
         GameObject deathEffectObject = Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(deathEffectObject, 0.4f);
     }
-
-    public void Explode() {
-        SoundManagerScript.PlaySound("enemyDeath");
-        Destroy(gameObject);
-
-        GameObject deathEffectObject = Instantiate(deathEffect, transform.position, Quaternion.identity);
-        Destroy(deathEffectObject, 0.4f);
-    }
 }

@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 243449295021562808}
   - {fileID: 1999656141331395005}
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1481510147
-  m_SortingLayer: -2
+  m_SortingLayer: -4
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: d33777d1f62a85747a7dd68e732e9197, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -113,6 +114,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.202, y: 0.94600004, z: 0}
   m_LocalScale: {x: 0.0290625, y: 0.0296875, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4693642516604336009}
   m_RootOrder: 1
@@ -213,6 +215,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: -0.088, y: 1.251, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4693642516604336009}
   m_RootOrder: 0
@@ -237,7 +240,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 0.1
   m_LightVolumeIntensityEnabled: 1
-  m_ApplyToSortingLayers: 5d441759fdf2b1a7000000004fb6ccec
+  m_ApplyToSortingLayers: 5d441759fdf2b1a7000000004fb6ccecaf3d60c7
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -322,6 +325,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.087, y: 1.2340001, z: 0}
   m_LocalScale: {x: 0.5, y: 0.03, z: 1.0018}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4693642516604336009}
   m_RootOrder: 2
