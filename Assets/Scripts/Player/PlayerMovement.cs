@@ -63,6 +63,19 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        // movement
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        
+        if (!wallSliding) {
+            if (!isCrouching) {
+                _rigidBody.velocity = new Vector2(moveHorizontal * moveSpeed, _rigidBody.velocity.y);
+                animator.SetFloat("Speed", Mathf.Abs(moveHorizontal)); // trigger run animation 
+            }
+            else {
+                _rigidBody.velocity = new Vector2(moveHorizontal * crouchedMoveSpeed, _rigidBody.velocity.y);
+            }
+        }
+        
         // to make player slide from wall
         if(wallSliding) {
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, Mathf.Clamp(_rigidBody.velocity.y, wallSlidingSpeed, float.MaxValue));
@@ -81,16 +94,16 @@ public class PlayerMovement : MonoBehaviour
             SoundManagerScript.PlaySound("jump");
             animator.SetBool("IsJumping", true); // triggers jump animation
         }
-
         else if(Input.GetButtonDown("Jump") && availableJumps == 0 && isGrounded && !touchingCiling && !wallSliding) {  // for single/last jump
             _rigidBody.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
 
             animator.SetBool("IsJumping", true); // triggers jump animation
         }
-
         else if(Input.GetButtonDown("Jump") && wallSliding) {   // jump after wall sliding
-            _rigidBody.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
-            _rigidBody.transform.Translate(new Vector2(wallJumpDistance, 0f) * Time.deltaTime); // move away from wall
+            if (facingRight)
+                _rigidBody.AddForce(new Vector2(wallJumpDistance, jumpHeight), ForceMode2D.Impulse);
+            else
+                _rigidBody.AddForce(new Vector2(-wallJumpDistance, jumpHeight), ForceMode2D.Impulse);
 
             animator.SetBool("IsJumping", true); // triggers jump animation
             SoundManagerScript.PlaySound("jump");
@@ -111,6 +124,10 @@ public class PlayerMovement : MonoBehaviour
             UpdateFirePoint(0f, 0.21f);     // reset fire point after crouching
             animator.SetBool("IsCrouching", false);
         }
+
+        // flipping when necessary
+        if(!facingRight && moveHorizontal > 0 && !wallSliding || facingRight && moveHorizontal < 0 && !wallSliding)
+            Flip();
 
         UpdatePlayerColloider();    // updates player colloider while standing / crouching / wall-sliding
     }
@@ -164,20 +181,6 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool("IsJumping", true);
             }
         }
-        
-        // movement
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        if(!isCrouching) {
-            _rigidBody.velocity = new Vector2(moveHorizontal * moveSpeed, _rigidBody.velocity.y);
-            animator.SetFloat("Speed", Mathf.Abs(moveHorizontal)); // trigger run animation 
-        }
-        else {
-            _rigidBody.velocity = new Vector2(moveHorizontal * crouchedMoveSpeed, _rigidBody.velocity.y);
-        }
-        
-        // flipping when necessary
-        if(!facingRight && moveHorizontal > 0 && !wallSliding || facingRight && moveHorizontal < 0 && !wallSliding)
-            Flip();
     }
     
     // function to flip character

@@ -14,6 +14,8 @@ public class CrabAI : MonoBehaviour
 
     [SerializeField]
     private LayerMask wallLayer;
+    [SerializeField]
+    private LayerMask targetLayer;
 
     [SerializeField]
     private float attackDelay = 1.0f;
@@ -44,7 +46,7 @@ public class CrabAI : MonoBehaviour
     {
         _rigidBody = GetComponent<Rigidbody2D>();
 
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        target = GameObject.FindGameObjectWithTag("Player").transform; 
 
         animator = GetComponent<Animator>();
     }
@@ -91,7 +93,12 @@ public class CrabAI : MonoBehaviour
 
         inAttackRange = (targetDistance <= attackRange);
 
-        facingTarget = Vector2.Angle(target.position, transform.position - target.position) > 90;
+        Debug.DrawRay(firePoint.position, transform.forward, Color.green);
+
+        if (facingRight)
+            facingTarget = Physics2D.Raycast(firePoint.position, Vector2.right, detectionRange, targetLayer);
+        else
+            facingTarget = Physics2D.Raycast(firePoint.position, -Vector2.right, detectionRange, targetLayer);
 
         animator.SetFloat("Speed", Mathf.Abs(_rigidBody.velocity.x));
 

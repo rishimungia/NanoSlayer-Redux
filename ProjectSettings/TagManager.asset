@@ -44,14 +44,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background Props
-    uniqueID: 2813457149
-    locked: 0
   - name: Background
     uniqueID: 3322919559
     locked: 0
+  - name: Background Wall
+    uniqueID: 1769548645
+    locked: 0
   - name: Wall
     uniqueID: 3344973231
+    locked: 0
+  - name: Overlay
+    uniqueID: 2813457149
     locked: 0
   - name: Ground
     uniqueID: 1494697053

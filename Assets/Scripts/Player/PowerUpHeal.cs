@@ -32,7 +32,7 @@ public class PowerUpHeal : MonoBehaviour
                 Destroy(gameObject);
 
                 GameObject healEffectObject = Instantiate(healEffect, transform.position, Quaternion.identity);
-                Destroy(healEffectObject, 0.5f);
+                Destroy(healEffectObject, 1.0f);
             }
         }
     }
