@@ -12,24 +12,11 @@ public class Bullet : MonoBehaviour
     
     private Rigidbody2D _rigidbody;
     
-    public void FireStart(int i)
+    public void FireStart()
     {
         SoundManagerScript.PlaySound("shoot");
-        if (i == 1)
-        {
-            _rigidbody = GetComponent<Rigidbody2D>();
-            _rigidbody.velocity = transform.right * speed;  // give bullet const velocity
-        }
-        else if (i == 2)
-        {
-            _rigidbody = GetComponent<Rigidbody2D>();
-            _rigidbody.velocity = transform.right * speed + transform.up * speed;
-        }
-        else if (i == 3)
-        {
-            _rigidbody = GetComponent<Rigidbody2D>();
-            _rigidbody.velocity = transform.right * speed + -transform.up * speed;
-        }
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody.velocity = transform.right * speed;  // give bullet const velocity
     }
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
@@ -45,7 +32,7 @@ public class Bullet : MonoBehaviour
         BarrelExplode barrel = hitInfo.GetComponent<BarrelExplode>();
         if(barrel != null)
         {
-            barrel.TakeDamage(1);
+            barrel.TakeDamage();
         }
 
         // bullet knockback

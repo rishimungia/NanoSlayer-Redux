@@ -96,6 +96,7 @@ public class RoboSpiderAI : MonoBehaviour
         SoundManagerScript.PlaySound("enemyDeath");
         Destroy(gameObject);
 
+        CameraShake.Instance.ShakeCamera(0.2f, 0.4f);
         GameObject deathEffectObject = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         Destroy(deathEffectObject, 0.4f);
     }

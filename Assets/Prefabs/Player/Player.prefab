@@ -350,11 +350,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e39caa1d8bafd34b82af74b5c4d43f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.5
-  crouchedMoveSpeed: 0.5
-  jumpHeight: 11
+  moveSpeed: 3
+  crouchedMoveSpeed: 1
+  jumpHeight: 14
   wallJumpDistance: 25
-  extraJumps: 1
+  extraJumps: 0
   wallSlidingSpeed: 0.25
   groundCheck: {fileID: 5524533529048764277}
   cilingCheck: {fileID: 7958357449251124394}
@@ -362,13 +362,11 @@ MonoBehaviour:
   rearCheck: {fileID: 171733848702875781}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 32768
+    m_Bits: 40960
   wallLayer:
     serializedVersion: 2
     m_Bits: 2048
   firePoint: {fileID: 5524533527487291414}
-  shotgunPoint: {fileID: 7118298055799858846}
-  shotgunFirePoint: {fileID: 9135834255947761222}
 --- !u!114 &5524533528399091883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,13 +380,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 5524533527487291414}
-  ShotgunPoint: {fileID: 7118298055799858846}
-  ShotgunFirePoint: {fileID: 9135834255947761222}
   bulletPrefab: {fileID: 1686644200837447621, guid: 26ed9873e3b19ad4ba75fe74cc6ac04d, type: 3}
-  swordPrefab: {fileID: 5222065692281784479, guid: 52f65693bd0614e4abf929dee5cc981d, type: 3}
-  shotgunPrefab: {fileID: 1562042015736076135, guid: 58002661e8fb1034d86076d27777dfde, type: 3}
-  machinegunPrefab: {fileID: 5162012955792898323, guid: 3ecb00aa39504194ba586a8b86cd5c78, type: 3}
-  animator: {fileID: 5524533528399091876}
+  firingRate: 0.4
 --- !u!114 &-8500153484352749338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,7 +477,7 @@ MonoBehaviour:
   m_FalloffIntensity: 0.5
   m_Color: {r: 0, g: 0.96078444, b: 1, a: 1}
   m_Intensity: 2
-  m_LightVolumeIntensity: 0.4
+  m_LightVolumeIntensity: 0.25
   m_LightVolumeIntensityEnabled: 1
   m_ApplyToSortingLayers: 5d441759fdf2b1a700000000eddda0ca
   m_LightCookieSprite: {fileID: 21300000, guid: d613862c0792c8d47a096dbaf1396ed6, type: 3}

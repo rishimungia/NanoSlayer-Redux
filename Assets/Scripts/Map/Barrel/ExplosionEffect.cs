@@ -28,7 +28,7 @@ public class ExplosionEffect : MonoBehaviour
 
         BarrelExplode barrel = hitInfo.GetComponent<BarrelExplode>();
         if (barrel != null) {
-            barrel.TakeDamage(2);                   // barrel chain reaction
+            barrel.TakeDamage();                   // barrel chain reaction
         }
 
         PlayerHealth player = hitInfo.GetComponent<PlayerHealth>();

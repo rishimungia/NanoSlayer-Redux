@@ -50,14 +50,14 @@ TagManager:
   - name: Background Wall
     uniqueID: 1769548645
     locked: 0
+  - name: Ground
+    uniqueID: 1494697053
+    locked: 0
   - name: Wall
     uniqueID: 3344973231
     locked: 0
   - name: Overlay
     uniqueID: 2813457149
-    locked: 0
-  - name: Ground
-    uniqueID: 1494697053
     locked: 0
   - name: Default
     uniqueID: 0
@@ -67,4 +67,7 @@ TagManager:
     locked: 0
   - name: Foreground Props
     uniqueID: 3399540205
+    locked: 0
+  - name: Foreground
+    uniqueID: 2809538209
     locked: 0

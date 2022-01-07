@@ -1,32 +1,50 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class LavaDeath : MonoBehaviour
 {
+    [SerializeField]
+    private float damageDelay;
+    [SerializeField]
+    private int damageAmountPlayer;
+    [SerializeField]
+    private int damageAmountEnemy;
+
+    private PlayerHealth playerHealth;
     
-    void OnTriggerEnter2D(Collider2D col)
-    {
+    void OnTriggerEnter2D(Collider2D col) {
+
         // kills player when fallen into lava
         if (col.name == "Player") {
-            PlayerHealth playerHealth = col.GetComponent<PlayerHealth>();
-            playerHealth.TakeDamage(100);
-            
-            FindObjectOfType<GameManager>().EndGame();
+            playerHealth = col.GetComponent<PlayerHealth>();
 
-            // disables player sliding due to no friction
-            Rigidbody2D player = col.GetComponent<Rigidbody2D>();
-            player.velocity = new Vector2(0f, 0f);
+            StartCoroutine("Burn");           
         }
 
         // kills enemy when fallen into lava
         if (col.tag == "Enemy") {
             Enemy enemy = col.GetComponent<Enemy>();
-            enemy.TakeDamage(500);
+            enemy.TakeDamage(damageAmountEnemy);
         }
 
         // explodes barrel when fallen into lava
         if (col.tag == "Barrel") {
             BarrelExplode barrel = col.GetComponent<BarrelExplode>();
-            barrel.TakeDamage(2);
+            barrel.TakeDamage();
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col) {
+        if (col.name == "Player") {
+            StopCoroutine("Burn");
+        }
+    }
+
+    IEnumerator Burn() {
+        while(true) {
+            CameraShake.Instance.ShakeCamera(0.25f, 0.25f);
+            playerHealth.TakeDamage(damageAmountPlayer);
+            yield return new WaitForSeconds(damageDelay);
         }
     }
 }

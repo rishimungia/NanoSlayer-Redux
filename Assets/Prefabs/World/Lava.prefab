@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &284458593592059539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7177369141079639626}
+  - component: {fileID: 4555831777944684243}
+  m_Layer: 13
+  m_Name: Lava Colloider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7177369141079639626
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284458593592059539}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6312701959088947536}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &4555831777944684243
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284458593592059539}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.15}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.25, y: 0}
+  - {x: 0.25, y: 0}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &5141473781403437408
 GameObject:
   m_ObjectHideFlags: 0
@@ -4857,6 +4911,7 @@ Transform:
   m_Children:
   - {fileID: 6312701959356791266}
   - {fileID: 4349757866806256274}
+  - {fileID: 7177369141079639626}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4925,7 +4980,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.23816259}
+  m_Offset: {x: 0, y: -0.057114974}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -4936,7 +4991,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.023674875}
+  m_Size: {x: 0.5, y: 0.3857701}
   m_EdgeRadius: 0
 --- !u!114 &6312701959088947543
 MonoBehaviour:
@@ -5037,6 +5092,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5056d213546694c8ed904b4b7336c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageDelay: 0.5
+  damageAmountPlayer: 25
+  damageAmountEnemy: 500
 --- !u!95 &6312701959088947538
 Animator:
   serializedVersion: 4
@@ -5109,7 +5167,7 @@ MonoBehaviour:
   m_Intensity: 2
   m_LightVolumeIntensity: 0.1
   m_LightVolumeIntensityEnabled: 1
-  m_ApplyToSortingLayers: 87ba0fc6652b7969af3d60c7fdf2b1a75d44175900000000eddda0ca
+  m_ApplyToSortingLayers: 652b7969af3d60c7fdf2b1a75d44175900000000eddda0ca
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0

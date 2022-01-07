@@ -1,49 +1,42 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 
 public class BarrelExplode : MonoBehaviour
 {
-    public int hitPoints = 2;           // barrel hit points
-    public int weaponPoints = 500;      // points given for powerup when distroyed
-    public GameObject explodeEffect;    // death effect
+    [SerializeField]
+    private float explodeTimer = 1.0f;               // barrel explode delay
+    [SerializeField]
+    private GameObject explodeEffect;                // exploding effect
 
-    public void TakeDamage(int damagePoints)
-    {
-        hitPoints -= damagePoints;
+    private Animator animator;
 
-        if(hitPoints == 1) {
-            GetComponent<UnityEngine.Rendering.Universal.Light2D>().enabled = true;
-        }
-
-        if(hitPoints <= 0) {
-            Explode();
-        }
+    void Start() {
+        animator = GetComponent<Animator>();
     }
 
-    void Explode()
+    public void TakeDamage()
     {
-        //SoundManagerScript.PlaySound("explode");
-        if(!Weapon.powerup1 && !Weapon.powerup2 && !Weapon.powerup3) {
-            Weapon.powerPoints = Weapon.powerPoints + weaponPoints;
-        }
+        StartCoroutine("Explode");
+    }
 
-        if(Weapon.powerPoints > 1000) {
-            Weapon.powerPoints = 1000;
-        }
+    IEnumerator Explode()
+    {
+        animator.SetBool("Ignited", true);
 
+        yield return new WaitForSeconds(explodeTimer);
+        
+        SoundManagerScript.PlaySound("explode");
         Destroy(gameObject);
 
+        CameraShake.Instance.ShakeCamera(0.5f, 0.5f);
         GameObject explodeEffectBig = Instantiate(explodeEffect, transform.position, Quaternion.identity, explodeEffect.transform.parent);
         explodeEffectBig.transform.localScale = new Vector2(1.5f, 1.5f);
 
-        GameObject explodeEffectSmall = Instantiate(explodeEffect, transform.position + new Vector3(-3f, 3f, 0f), Quaternion.identity);
+        GameObject explodeEffectSmall = Instantiate(explodeEffect, transform.position + new Vector3(-0.25f, 0.25f, 0f), Quaternion.identity);
 
         Destroy(explodeEffectBig, 0.4f);
         Destroy(explodeEffectSmall, 0.5f);
     }
     
-    private void OnDrawGizmosSelected()
-    {
-
-    }
 }

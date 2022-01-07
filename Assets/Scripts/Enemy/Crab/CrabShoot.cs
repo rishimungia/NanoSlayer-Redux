@@ -34,7 +34,7 @@ public class CrabShoot : MonoBehaviour
         BarrelExplode barrel = hitInfo.GetComponent<BarrelExplode>();
         if(barrel != null)
         {
-            barrel.TakeDamage(1);
+            barrel.TakeDamage();
         }
 
         Destroy(gameObject);

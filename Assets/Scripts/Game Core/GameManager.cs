@@ -27,16 +27,6 @@ public class GameManager : MonoBehaviour
         // reset scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-        // remove powerups
-        Weapon.powerup1 = false;
-        Weapon.powerup2 = false;
-        Weapon.powerup3 = false;
-        Weapon.powerPoints = 1000;
-
-        Debug.Log("Your total Point: " + Weapon.gamePoints);
-
-        Weapon.gamePoints = 0;
-
         // reset player direction
         PlayerMovement.facingRight = true;
         player.GetComponent<PlayerMovement>().enabled = true;

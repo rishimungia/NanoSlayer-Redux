@@ -48,7 +48,7 @@ MonoBehaviour:
   m_LightType: 2
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0, g: 0.7734647, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.37551636, b: 0, a: 1}
   m_Intensity: 1.5
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 1
@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 3259673847228778497}
   - component: {fileID: 3259673847228778496}
   - component: {fileID: 3259673847228778527}
+  - component: {fileID: 5819801987295671221}
   m_Layer: 15
   m_Name: Barrel
   m_TagString: Barrel
@@ -239,7 +240,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.009780437, y: 0.0054647624}
+  m_Offset: {x: -0.015340686, y: 0.008990884}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -250,7 +251,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.53305143, y: 0.7002761}
+  m_Size: {x: 0.82875574, y: 1.0899062}
   m_EdgeRadius: 0
 --- !u!50 &3259673847228778497
 Rigidbody2D:
@@ -280,7 +281,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3259673847228778526}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
@@ -290,14 +291,14 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 1.8
-  m_LightVolumeIntensity: 1
+  m_Intensity: 0
+  m_LightVolumeIntensity: 10
   m_LightVolumeIntensityEnabled: 1
   m_ApplyToSortingLayers: 5d441759fdf2b1a7000000004fb6ccec
   m_LightCookieSprite: {fileID: 21300000, guid: 08ac58acc149aa446bf0f62fc25c5fda, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 21300000, guid: 08ac58acc149aa446bf0f62fc25c5fda, type: 3}
   m_LightOrder: 0
-  m_OverlapOperation: 0
+  m_OverlapOperation: 1
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
@@ -435,6 +436,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b12a5eb15e713e428c9de3c7f8c2e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 2
-  weaponPoints: 500
+  explodeTimer: 1
   explodeEffect: {fileID: 1764386194386784117, guid: 1472837986590984c9fc3a47cafc05a2, type: 3}
+--- !u!95 &5819801987295671221
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3259673847228778526}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 854d6984726299445a2cafbaac0d6904, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

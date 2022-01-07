@@ -32,10 +32,6 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private Transform firePoint;             // bullet fire-point
-    [SerializeField]
-    private Transform shotgunPoint;
-    [SerializeField]
-    private Transform shotgunFirePoint;
 
     public static bool facingRight = true;
 
@@ -109,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
             SoundManagerScript.PlaySound("jump");
         }
 
-        if(_rigidBody.velocity.y <= 0.01 && isGrounded) {
+        if(Mathf.Abs(_rigidBody.velocity.y) <= 0.01) {
             animator.SetBool("IsJumping", false); // ends jumping animation
         }
 
@@ -210,7 +206,5 @@ public class PlayerMovement : MonoBehaviour
     void UpdateFirePoint(float x, float y)
     {
         firePoint.position = new Vector2(firePoint.position.x + x, firePoint.position.y + y);
-        shotgunFirePoint.position = new Vector2(shotgunFirePoint.position.x + x, shotgunFirePoint.position.y + y);
-        shotgunPoint.position = new Vector2(shotgunPoint.position.x + x, shotgunPoint.position.y + y);
     }
 }
