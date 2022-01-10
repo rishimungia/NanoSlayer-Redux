@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Weapon : MonoBehaviour
 {
@@ -10,13 +10,10 @@ public class Weapon : MonoBehaviour
     private GameObject bulletPrefab;     // bullet prefab
 
     [SerializeField]
-    private float firingRate;
+    private float fireDelay;
 
     private bool canShoot = true;
-    
-    public static int powerPoints = 1000;       // amount of weapon points
-    public static int gamePoints = 0;           // The points collected throughout the game
-    public static int bulletHitPoits = 0;       // Number of times bullet hit the enemy
+    private bool weaponInput;
 
     private Animator animator;           // for controlling animation
 
@@ -24,13 +21,17 @@ public class Weapon : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void Update()
-    {
-        if(Input.GetButton("Fire1") && canShoot)
-        {
+    void FixedUpdate() {
+        if (canShoot && weaponInput) {
             StartCoroutine("Fire");
         }
     }
+
+    public void OnShoot(InputAction.CallbackContext context)
+    {
+        weaponInput = context.performed;
+    }
+
     IEnumerator Fire()
     {
         canShoot = false;
@@ -41,7 +42,7 @@ public class Weapon : MonoBehaviour
         animator.SetTrigger("Shoot");
         CameraShake.Instance.ShakeCamera(0.1f, 0.1f);
         
-        yield return new WaitForSeconds(firingRate);
+        yield return new WaitForSeconds(fireDelay);
         canShoot = true;
     }
 }

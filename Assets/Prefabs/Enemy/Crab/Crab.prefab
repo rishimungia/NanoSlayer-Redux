@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 5968743142732287187}
   - component: {fileID: 5968743142732287188}
   - component: {fileID: 1951928326591729007}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Crab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -250,7 +250,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 150
-  weaponPoints: 500
   deathEffect: {fileID: 1764386194386784117, guid: 668c834800729294f823e5d10ca4a703, type: 3}
 --- !u!114 &1951928326591729007
 MonoBehaviour:

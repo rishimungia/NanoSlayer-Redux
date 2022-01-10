@@ -43,10 +43,10 @@ public class RoboSpiderAI : MonoBehaviour
         // move close if in detection range
         if (inRange) {
             if (_rigidBody.position.x - target.position.x > 0) {
-                _rigidBody.velocity = new Vector2(-moveSpeed, 0f);
+                _rigidBody.velocity = new Vector2(-moveSpeed, _rigidBody.velocity.y);
             }
             else {
-                _rigidBody.velocity = new Vector2(moveSpeed, 0f);
+                _rigidBody.velocity = new Vector2(moveSpeed, _rigidBody.velocity.y);
             }
         }
 

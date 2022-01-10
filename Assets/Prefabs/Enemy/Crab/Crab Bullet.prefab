@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2802668971813062170}
   - component: {fileID: 2802668971813062181}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Sprite Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 2802668972854481368}
   - component: {fileID: 8417426501552177721}
   - component: {fileID: 6832528678974663056}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Crab Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  damage: 15
+  damage: 20
   impactEffect: {fileID: 2390212986216015807, guid: dc15664a55bccc14aa375c096392a1f4, type: 3}
 --- !u!114 &6832528678974663056
 MonoBehaviour:

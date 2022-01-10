@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;              // player animator 
     private Rigidbody2D _rigidBody;         // player rigidbody
     private BoxCollider2D boxColloider;     // player box colloider
+
+    private float moveHorizontal;
     
     private bool isGrounded;
     private bool touchingCiling;
@@ -57,79 +60,9 @@ public class PlayerMovement : MonoBehaviour
         boxColloider = GetComponent<BoxCollider2D>();
     }
 
-    void Update()
-    {
-        // movement
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        
-        if (!wallSliding) {
-            if (!isCrouching) {
-                _rigidBody.velocity = new Vector2(moveHorizontal * moveSpeed, _rigidBody.velocity.y);
-                animator.SetFloat("Speed", Mathf.Abs(moveHorizontal)); // trigger run animation 
-            }
-            else {
-                _rigidBody.velocity = new Vector2(moveHorizontal * crouchedMoveSpeed, _rigidBody.velocity.y);
-            }
-        }
-        
-        // to make player slide from wall
-        if(wallSliding) {
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, Mathf.Clamp(_rigidBody.velocity.y, wallSlidingSpeed, float.MaxValue));
-        }
-
-        // reset jumps if player is grounded
-        if(isGrounded || wallSliding) {
-            availableJumps = extraJumps;
-        }
-            
-        // jump
-        if(Input.GetButtonDown("Jump") && availableJumps > 0 && !touchingCiling && !wallSliding) {  // for extra jumps
-            _rigidBody.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
-            availableJumps--;
-
-            SoundManagerScript.PlaySound("jump");
-            animator.SetBool("IsJumping", true); // triggers jump animation
-        }
-        else if(Input.GetButtonDown("Jump") && availableJumps == 0 && isGrounded && !touchingCiling && !wallSliding) {  // for single/last jump
-            _rigidBody.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
-
-            animator.SetBool("IsJumping", true); // triggers jump animation
-        }
-        else if(Input.GetButtonDown("Jump") && wallSliding) {   // jump after wall sliding
-            if (facingRight)
-                _rigidBody.AddForce(new Vector2(wallJumpDistance, jumpHeight), ForceMode2D.Impulse);
-            else
-                _rigidBody.AddForce(new Vector2(-wallJumpDistance, jumpHeight), ForceMode2D.Impulse);
-
-            animator.SetBool("IsJumping", true); // triggers jump animation
-            SoundManagerScript.PlaySound("jump");
-        }
-
-        if(Mathf.Abs(_rigidBody.velocity.y) <= 0.01) {
-            animator.SetBool("IsJumping", false); // ends jumping animation
-        }
-
-        // crouch
-        if(Input.GetButtonDown("Crouch") && !wallSliding) {
-            isCrouching = true;
-            UpdateFirePoint(0f, -0.21f);    // update fire point while crouching
-            animator.SetBool("IsCrouching", true);
-        }
-        else if((Input.GetButtonUp("Crouch") && !touchingCiling && isCrouching) || (!Input.GetButton("Crouch") && isCrouching && !touchingCiling)) {
-            isCrouching = false;
-            UpdateFirePoint(0f, 0.21f);     // reset fire point after crouching
-            animator.SetBool("IsCrouching", false);
-        }
-
-        // flipping when necessary
-        if(!facingRight && moveHorizontal > 0 && !wallSliding || facingRight && moveHorizontal < 0 && !wallSliding)
-            Flip();
-
-        UpdatePlayerColloider();    // updates player colloider while standing / crouching / wall-sliding
-    }
-
     void FixedUpdate()
     {
+        
         // check if the player is grounded
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 
@@ -177,6 +110,94 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool("IsJumping", true);
             }
         }
+        
+        // movement
+        if (!wallSliding) {
+            if (!isCrouching) {
+                _rigidBody.velocity = new Vector2(moveHorizontal * moveSpeed, _rigidBody.velocity.y);
+                animator.SetFloat("Speed", Mathf.Abs(moveHorizontal)); // trigger run animation 
+            }
+            else {
+                _rigidBody.velocity = new Vector2(moveHorizontal * crouchedMoveSpeed, _rigidBody.velocity.y);
+            }
+        }
+
+        // to make player slide from wall
+        if (wallSliding && !isCrouching) {
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, Mathf.Clamp(_rigidBody.velocity.y, -wallSlidingSpeed, float.MaxValue));
+            Debug.Log(_rigidBody.velocity.y);
+        }
+        else if (wallSliding && isCrouching) {
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, Mathf.Clamp(_rigidBody.velocity.y, -wallSlidingSpeed*2, float.MaxValue));
+            Debug.Log("C");
+            Debug.Log(_rigidBody.velocity.y);
+        }
+        
+
+        // reset jumps if player is grounded
+        if(isGrounded || wallSliding) {
+            availableJumps = extraJumps;
+        }
+            
+        // reset jump animation
+        if(Mathf.Abs(_rigidBody.velocity.y) <= 0.01) {
+            animator.SetBool("IsJumping", false); // ends jumping animation
+        }
+
+        // flipping when necessary
+        if(!facingRight && moveHorizontal > 0 && !wallSliding || facingRight && moveHorizontal < 0 && !wallSliding)
+            Flip();
+
+        UpdatePlayerColloider();    // updates player colloider while standing / crouching / wall-sliding
+    }
+
+    // movement input
+    public void OnMove (InputAction.CallbackContext context) {
+        if(context.ReadValue<float>() > 0)
+            moveHorizontal = 1;
+        else if(context.ReadValue<float>() < 0)
+            moveHorizontal = -1;
+        else
+            moveHorizontal = 0;
+    }
+    
+    // jump
+    public void OnJump (InputAction.CallbackContext context) {
+        if(context.performed && availableJumps > 0 && !touchingCiling && !wallSliding) {  // for extra jumps
+            _rigidBody.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
+            availableJumps--;
+
+            SoundManagerScript.PlaySound("jump");
+            animator.SetBool("IsJumping", true); // triggers jump animation
+        }
+        else if(context.performed && availableJumps == 0 && isGrounded && !touchingCiling && !wallSliding) {  // for single/last jump
+            _rigidBody.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
+
+            animator.SetBool("IsJumping", true); // triggers jump animation
+        }
+        else if(context.performed && wallSliding) {   // jump after wall sliding
+            if (facingRight)
+                _rigidBody.AddForce(new Vector2(wallJumpDistance, jumpHeight), ForceMode2D.Impulse);
+            else
+                _rigidBody.AddForce(new Vector2(-wallJumpDistance, jumpHeight), ForceMode2D.Impulse);
+
+            animator.SetBool("IsJumping", true); // triggers jump animation
+            SoundManagerScript.PlaySound("jump");
+        }
+    }
+
+    // crouch
+    public void OnCrouch(InputAction.CallbackContext context) {
+        if(context.performed && !wallSliding) {
+            isCrouching = true;
+            UpdateFirePoint(0f, -0.21f);    // update fire point while crouching
+            animator.SetBool("IsCrouching", true);
+        }
+        else if(context.canceled && !touchingCiling && isCrouching) {
+            isCrouching = false;
+            UpdateFirePoint(0f, 0.21f);     // reset fire point after crouching
+            animator.SetBool("IsCrouching", false);
+        }
     }
     
     // function to flip character
@@ -203,6 +224,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // function to update fire point while crouching / wall-sliding
     void UpdateFirePoint(float x, float y)
     {
         firePoint.position = new Vector2(firePoint.position.x + x, firePoint.position.y + y);

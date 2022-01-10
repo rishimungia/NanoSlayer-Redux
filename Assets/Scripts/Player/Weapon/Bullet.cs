@@ -2,22 +2,34 @@
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 20.0f;             // bullet travel speed
+    [SerializeField]
+    private float speed;                     // bullet travel speed
 
-    public float knockbackX = 1.0f;         // bullet knockback multiplier in x axis
-    public float knockbackY = 1.0f;         // bullet knockback multiplier in y axis
+    [SerializeField]
+    private float knockbackX;               // bullet knockback multiplier in x axis
+    [SerializeField]
+    private float knockbackY;               // bullet knockback multiplier in y axis
 
-    public int damage = 40;                 // bullet damage amount
-    public GameObject impactEffect;         // bullet impact effect
+    [SerializeField]
+    private int damage;                     // bullet damage amount
+    [SerializeField]
+    private GameObject impactEffect;         // bullet impact effect
+
+    [SerializeField]
+    private float bulletLifetime;
     
     private Rigidbody2D _rigidbody;
+
+    void Start() {
+        Destroy(gameObject, bulletLifetime);
+    }
     
-    public void FireStart()
-    {
+    public void FireStart() {
         SoundManagerScript.PlaySound("shoot");
         _rigidbody = GetComponent<Rigidbody2D>();
         _rigidbody.velocity = transform.right * speed;  // give bullet const velocity
     }
+    
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
         // if bullet hits an enemy
@@ -26,7 +38,6 @@ public class Bullet : MonoBehaviour
         {
             SoundManagerScript.PlaySound("bulletImpact");
             enemy.TakeDamage(damage);       // damage enemy
-            Weapon.bulletHitPoits++;
         }
 
         BarrelExplode barrel = hitInfo.GetComponent<BarrelExplode>();

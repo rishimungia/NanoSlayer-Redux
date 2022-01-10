@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.125, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3094104972083521044}
   m_RootOrder: 1
@@ -56,6 +57,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.2349, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3094104972083521044}
   m_RootOrder: 0
@@ -75,7 +77,7 @@ GameObject:
   - component: {fileID: 3094104972083521045}
   - component: {fileID: 3074960117575537463}
   - component: {fileID: 1706429622369756016}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Jumper
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -92,6 +94,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5384907, y: 0.3366303, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3977706379587351750}
   - {fileID: 2697590811655387465}
@@ -159,7 +162,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 3094104972083521050}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5bfb2ea4a77e45c46a62c9656250aa9e, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -217,7 +220,7 @@ Rigidbody2D:
   m_Constraints: 4
 --- !u!95 &3094104972083521045
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -230,6 +233,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -246,16 +250,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac12722d35c01a745a0f16298110c758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 5
   jumpForce: 16
   detectionRange: 4
-  jumpDelay: 2
-  attackDamage: 2
-  attackJump: {x: 2, y: 0.5}
+  jumpDelay: 1.5
+  attackDamage: 25
+  attackJump: {x: 40, y: 7}
   groundCheck: {fileID: 3977706379587351750}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 33024
+    m_Bits: 32768
   hitCheck: {fileID: 2697590811655387465}
   targetLayer:
     serializedVersion: 2
@@ -273,5 +277,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 175
-  weaponPoints: 500
   deathEffect: {fileID: 1764386194386784117, guid: d01f753a6731c5248936b7af0609eaad, type: 3}

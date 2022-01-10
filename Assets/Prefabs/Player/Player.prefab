@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 5524533528399091876}
   - component: {fileID: 5524533528399091873}
   - component: {fileID: 5524533528399091883}
+  - component: {fileID: 4120148857124856568}
   - component: {fileID: -8500153484352749338}
   m_Layer: 8
   m_Name: Player
@@ -314,8 +315,8 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 2
   m_Material: {fileID: 0}
-  m_Interpolate: 1
-  m_SleepingMode: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &5524533528399091876
@@ -355,7 +356,7 @@ MonoBehaviour:
   jumpHeight: 14
   wallJumpDistance: 25
   extraJumps: 0
-  wallSlidingSpeed: 0.25
+  wallSlidingSpeed: 0.1
   groundCheck: {fileID: 5524533529048764277}
   cilingCheck: {fileID: 7958357449251124394}
   frontCheck: {fileID: 3280209171200530534}
@@ -381,7 +382,101 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 5524533527487291414}
   bulletPrefab: {fileID: 1686644200837447621, guid: 26ed9873e3b19ad4ba75fe74cc6ac04d, type: 3}
-  firingRate: 0.4
+  fireDelay: 0.2
+--- !u!114 &4120148857124856568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5524533528399091874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: dc608b67d6e480b48846e5f4f37cbac0, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5524533528399091873}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 78315be9-3aed-4ba9-ae0f-e48aeee38a3d
+    m_ActionName: Player Movement/Move[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5524533528399091873}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: de40982d-49cb-4849-8fb8-3ff0cb92e2ed
+    m_ActionName: Player Movement/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5524533528399091873}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnCrouch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0efc3b0d-86dc-42d7-9e08-ea81976ad57f
+    m_ActionName: Player Movement/Crouch[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5524533528399091883}
+        m_TargetAssemblyTypeName: Weapon, Assembly-CSharp
+        m_MethodName: OnShoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1f9b7841-5a3b-45c6-9f5b-e510a3ab8d47
+    m_ActionName: Player Movement/Shoot[/Keyboard/ctrl,/Mouse/leftButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player Movement
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!114 &-8500153484352749338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f72f7cb535122334d83832972a52f92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 500
   healthBar: {fileID: 0}
 --- !u!1 &5524533529048764278
 GameObject:

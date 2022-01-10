@@ -48,9 +48,26 @@ public class JumperAI : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        isNear = (Mathf.Abs(_rigidBody.position.x - target.position.x) <= detectionRange) && (Mathf.Abs(_rigidBody.position.y - target.position.y) <= detectionRange);
+
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+
+        onTarget = Physics2D.OverlapCircle(hitCheck.position, 0.1f, targetLayer);
+
+        if (!isGrounded && !onTarget && canAttack) {
+            float movedistance = Mathf.Abs(_rigidBody.position.x - target.position.x);
+
+            if (_rigidBody.position.x - target.position.x > 0)
+                _rigidBody.velocity = new Vector2(-Mathf.Clamp(movedistance, 2.0f, moveSpeed), _rigidBody.velocity.y);
+            else
+                _rigidBody.velocity = new Vector2(Mathf.Clamp(movedistance, 2.0f, moveSpeed), _rigidBody.velocity.y);
+        }
+        else if (isGrounded) {
+            _rigidBody.velocity = new Vector2(0f, _rigidBody.velocity.y);
+        }
+        
         if(canJump && isNear) {
             StartCoroutine("Jump");
         }
@@ -59,37 +76,14 @@ public class JumperAI : MonoBehaviour
             animator.SetBool("IsJumping", false);
         }
 
-        if (!isGrounded && !onTarget && canAttack) {
-            float movedistance = Mathf.Abs(_rigidBody.position.x - target.position.x);
-
-            if (_rigidBody.position.x - target.position.x > 0)
-                _rigidBody.transform.Translate(new Vector2(-movedistance , 0f) * moveSpeed * Time.deltaTime);
-            else
-                _rigidBody.transform.Translate(new Vector2(movedistance, 0f) * moveSpeed * Time.deltaTime);
-        }
-
         if (canAttack && onTarget) {
             Attack();
         }
-
-        else if (!canAttack && onTarget) {
-            _rigidBody.AddForce(new Vector2(Random.Range(-attackJump.x, attackJump.x), attackJump.y), ForceMode2D.Impulse);
-        }
-
-    }
-
-    void FixedUpdate()
-    {
-        isNear = (Mathf.Abs(_rigidBody.position.x - target.position.x) <= detectionRange) && (Mathf.Abs(_rigidBody.position.y - target.position.y) <= detectionRange);
-
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-
-        onTarget = Physics2D.OverlapCircle(hitCheck.position, 0.05f, targetLayer);
     }
 
     IEnumerator Jump()
     {
-        if (isGrounded && !onTarget) {
+        if (isGrounded) {
             _rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             SoundManagerScript.PlaySound("jump");
             animator.SetBool("IsJumping", true);
@@ -99,6 +93,9 @@ public class JumperAI : MonoBehaviour
             canJump = false;
             yield return new WaitForSeconds(jumpDelay);
             canJump = true;
+        }
+        else if (onTarget && !canAttack) {
+            _rigidBody.AddForce(new Vector2(Random.Range(-0.1f, 0.1f) * attackJump.x, attackJump.y), ForceMode2D.Impulse);
         }
     }
 
