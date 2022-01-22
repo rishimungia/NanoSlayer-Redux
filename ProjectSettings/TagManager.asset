@@ -40,11 +40,17 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Map Barrier
+  - Background
+  - Extras
   m_SortingLayers:
-  - name: Background
+  - name: Background Layer 3
+    uniqueID: 1578492045
+    locked: 0
+  - name: Background Layer 2
+    uniqueID: 181733251
+    locked: 0
+  - name: Background Layer 1
     uniqueID: 3322919559
     locked: 0
   - name: Background Wall

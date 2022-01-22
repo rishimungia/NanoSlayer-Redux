@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,6 +14,10 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpDistance = 25.0f;  // distance to move player when jumping from wall
     [SerializeField]
     private int extraJumps;                  // number of allowed extra jumps
+    [SerializeField]
+    private float dashSpeed;
+    [SerializeField]
+    private float dashCooldown;
     
     [SerializeField][Range (0.0f, 1.0f)]
     private float wallSlidingSpeed;          // wall sliding speed
@@ -38,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;              // player animator 
     private Rigidbody2D _rigidBody;         // player rigidbody
-    private BoxCollider2D boxColloider;     // player box colloider
 
     private float moveHorizontal;
     
@@ -48,16 +52,19 @@ public class PlayerMovement : MonoBehaviour
 
     private bool wallSliding = false;
     private bool isCrouching = false;
+    private bool isDashing = false;
+    private bool canDash = true;
 
     private int availableJumps;
+    private float originalGravity;
 
     void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
 
         animator = GetComponent<Animator>();
-        
-        boxColloider = GetComponent<BoxCollider2D>();
+
+        originalGravity = _rigidBody.gravityScale;
     }
 
     void FixedUpdate()
@@ -82,26 +89,12 @@ public class PlayerMovement : MonoBehaviour
 
         // trigger wall sliding
         if(isTouchingWall && !isGrounded) {
-            if(!wallSliding) {
-                if(facingRight)     // update fire point while wall sliding
-                    UpdateFirePoint(0.08f, -0.03f);
-                else
-                    UpdateFirePoint(-0.08f, -0.03f);
-            }
-
             wallSliding = true;
 
             animator.SetBool("IsWallGrabbing", true);
             animator.SetBool("IsJumping", false);
         }
         else {
-            if(wallSliding) {
-                if(facingRight)     // reset fire point after wall sliding
-                    UpdateFirePoint(-0.08f, 0.03f);
-                else
-                    UpdateFirePoint(0.08f, 0.03f);
-            }
-
             wallSliding = false;
 
             animator.SetBool("IsWallGrabbing", false);
@@ -112,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         // movement
-        if (!wallSliding) {
+        if (!wallSliding && !isDashing) {
             if (!isCrouching) {
                 _rigidBody.velocity = new Vector2(moveHorizontal * moveSpeed, _rigidBody.velocity.y);
                 animator.SetFloat("Speed", Mathf.Abs(moveHorizontal)); // trigger run animation 
@@ -125,12 +118,9 @@ public class PlayerMovement : MonoBehaviour
         // to make player slide from wall
         if (wallSliding && !isCrouching) {
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, Mathf.Clamp(_rigidBody.velocity.y, -wallSlidingSpeed, float.MaxValue));
-            Debug.Log(_rigidBody.velocity.y);
         }
         else if (wallSliding && isCrouching) {
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, Mathf.Clamp(_rigidBody.velocity.y, -wallSlidingSpeed*2, float.MaxValue));
-            Debug.Log("C");
-            Debug.Log(_rigidBody.velocity.y);
         }
         
 
@@ -148,7 +138,6 @@ public class PlayerMovement : MonoBehaviour
         if(!facingRight && moveHorizontal > 0 && !wallSliding || facingRight && moveHorizontal < 0 && !wallSliding)
             Flip();
 
-        UpdatePlayerColloider();    // updates player colloider while standing / crouching / wall-sliding
     }
 
     // movement input
@@ -190,14 +179,46 @@ public class PlayerMovement : MonoBehaviour
     public void OnCrouch(InputAction.CallbackContext context) {
         if(context.performed && !wallSliding) {
             isCrouching = true;
-            UpdateFirePoint(0f, -0.21f);    // update fire point while crouching
             animator.SetBool("IsCrouching", true);
         }
         else if(context.canceled && !touchingCiling && isCrouching) {
             isCrouching = false;
-            UpdateFirePoint(0f, 0.21f);     // reset fire point after crouching
             animator.SetBool("IsCrouching", false);
         }
+    }
+
+    // dash
+    public void OnDash(InputAction.CallbackContext context) {
+        if(context.performed && canDash && !isCrouching && !wallSliding) {
+            StartCoroutine("Dash");
+        }
+    }
+
+    IEnumerator Dash() {
+        isDashing = true;
+        canDash = false;
+        animator.SetBool("IsDashing", isDashing);
+        
+        _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, 0.0f);
+
+        if (facingRight) {
+            _rigidBody.AddForce(new Vector2(dashSpeed, 0.0f), ForceMode2D.Impulse);
+        }
+        else {
+            _rigidBody.AddForce(new Vector2(-dashSpeed, 0.0f), ForceMode2D.Impulse);
+        }
+        
+        _rigidBody.gravityScale = 0.0f;
+
+        yield return new WaitForSeconds(0.2f);
+
+        isDashing = false;
+        animator.SetBool("IsDashing", isDashing);
+
+        _rigidBody.gravityScale = originalGravity;
+
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
     }
     
     // function to flip character
@@ -205,28 +226,5 @@ public class PlayerMovement : MonoBehaviour
     {
         facingRight = !facingRight;
         transform.Rotate(0f, 180f, 0f);
-    }
-
-    // function to update player box colloider
-    void UpdatePlayerColloider()
-    {
-        if(isCrouching) {
-            boxColloider.size = new Vector2(0.2354203f, 0.3754354f);
-            boxColloider.offset = new Vector2(0.0393582f, -0.1872717f);
-        }
-        else if(wallSliding) {
-            boxColloider.size = new Vector2(0.2840797f, 0.498189f);
-            boxColloider.offset = new Vector2(0.01508027f, -0.07814106f);
-        }
-        else {
-            boxColloider.size = new Vector2(0.2189612f, 0.5777787f);
-            boxColloider.offset = new Vector2(0.06211042f, -0.08610004f);
-        }
-    }
-
-    // function to update fire point while crouching / wall-sliding
-    void UpdateFirePoint(float x, float y)
-    {
-        firePoint.position = new Vector2(firePoint.position.x + x, firePoint.position.y + y);
     }
 }

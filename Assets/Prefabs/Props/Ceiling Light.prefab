@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1481510147
-  m_SortingLayer: -2
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 79c089348c62c784194f316b523081c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -112,7 +112,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6312617279396746576}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 0.03, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -135,11 +135,11 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.65
-  m_Color: {r: 1, g: 0.99215686, b: 0.94509804, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_LightVolumeIntensity: 0.1
+  m_LightVolumeIntensity: 0.05
   m_LightVolumeIntensityEnabled: 1
-  m_ApplyToSortingLayers: 5d441759000000004fb6ccecfdf2b1a7af3d60c7652b7969
+  m_ApplyToSortingLayers: 5d44175900000000af3d60c7652b7969
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 1
+  m_ShadowIntensityEnabled: 0
   m_ShadowIntensity: 1
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0
@@ -246,10 +246,10 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_LightVolumeIntensity: 0
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: eddda0cafdf2b1a7
+  m_ApplyToSortingLayers: fdf2b1a7
   m_LightCookieSprite: {fileID: 21300000, guid: b65c71c7025ae0f4395081a92010face, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 21300000, guid: b65c71c7025ae0f4395081a92010face, type: 3}
   m_LightOrder: 0
@@ -5078,7 +5078,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1481510147
-  m_SortingLayer: -2
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
