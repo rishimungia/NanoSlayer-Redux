@@ -6,10 +6,13 @@ public class Enemy : MonoBehaviour
     private int health = 100;            // enemy's hit points
     [SerializeField]
     private GameObject deathEffect;      // death effect
+    [SerializeField]
+    private bool invincible = false;
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        if(!invincible)
+            health -= damage;
 
         if(health <= 0)
         {

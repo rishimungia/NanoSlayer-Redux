@@ -15,6 +15,8 @@ public class Weapon : MonoBehaviour
     private bool canShoot = true;
     private bool weaponInput;
 
+    public static bool weaponsDisabled = false;
+
     private Animator animator;           // for controlling animation
 
     void Start() {
@@ -34,15 +36,21 @@ public class Weapon : MonoBehaviour
 
     IEnumerator Fire()
     {
-        canShoot = false;
+        if(!weaponsDisabled) {
+            canShoot = false;
+            
+            var shootobj = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            shootobj.GetComponent<Bullet>().FireStart();
 
-        var shootobj = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        shootobj.GetComponent<Bullet>().FireStart();
+            animator.SetTrigger("Shoot");
+            CameraShake.Instance.ShakeCamera(0.1f, 0.1f);
+            
+            yield return new WaitForSeconds(fireDelay);
+            canShoot = true;
+        }
+    }
 
-        animator.SetTrigger("Shoot");
-        CameraShake.Instance.ShakeCamera(0.1f, 0.1f);
-        
-        yield return new WaitForSeconds(fireDelay);
-        canShoot = true;
+    public static void DisableWeapon(bool toggle) {
+        weaponsDisabled = toggle;
     }
 }

@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
     public HealthUI healthBar;
 
     private int currentHealth;
+    private static bool isInvinsible = false;
 
     void Start()
     {
@@ -15,14 +16,16 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
+        if(!isInvinsible) {
+            currentHealth -= damage;
+            healthBar.SetHealth(currentHealth);
 
-        if(currentHealth <= 0) {
-            Rigidbody2D player = GetComponent<Rigidbody2D>();
-            player.velocity = new Vector2(0f, 0f);
-            
-            Respawn();
+            if(currentHealth <= 0) {
+                Rigidbody2D player = GetComponent<Rigidbody2D>();
+                player.velocity = new Vector2(0f, 0f);
+                
+                Respawn();
+            }
         }
     }
 
@@ -34,6 +37,10 @@ public class PlayerHealth : MonoBehaviour
         }
         else
             return false;
+    }
+
+    public static void SetInvincible(bool toggle) {
+        isInvinsible = toggle;
     }
 
     void Respawn()

@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PowerDash",
+                    "type": "Button",
+                    "id": "d71bf381-963e-498e-b2cf-bdef9750a89a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -143,8 +152,8 @@
                 {
                     "name": "",
                     "id": "62102c3a-458b-4d90-bc9c-e330acebc53b",
-                    "path": "<Keyboard>/x",
-                    "interactions": "Hold",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
@@ -187,11 +196,22 @@
                 {
                     "name": "",
                     "id": "45404619-4f5d-4ede-b36e-787ab55fde73",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "Tap",
                     "processors": "",
                     "groups": "",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae2797ef-cdaa-4fd0-a295-b30771dbb9d5",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PowerDash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

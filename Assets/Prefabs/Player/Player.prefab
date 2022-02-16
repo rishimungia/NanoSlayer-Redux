@@ -110,6 +110,78 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &2858289816408994942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8559595033410413758}
+  - component: {fileID: 8756074768192309142}
+  - component: {fileID: 1188664128406923487}
+  m_Layer: 14
+  m_Name: Power Dash Effector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8559595033410413758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2858289816408994942}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5524533528399091877}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &8756074768192309142
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2858289816408994942}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 5bfb2ea4a77e45c46a62c9656250aa9e, type: 2}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.038835287, y: 0.02273114}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.25, y: 1.25}
+    newSize: {x: 1.25, y: 1.25}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6113143, y: 0.4558852}
+  m_EdgeRadius: 0
+--- !u!114 &1188664128406923487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2858289816408994942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fedbc96c45390454bbb3c888f006e7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerDashDamage: 500
 --- !u!1 &3040743358785997048
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +261,7 @@ GameObject:
   - component: {fileID: 5524533528399091883}
   - component: {fileID: 4120148857124856568}
   - component: {fileID: -8500153484352749338}
+  - component: {fileID: 1586816437168475310}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -215,6 +288,7 @@ Transform:
   - {fileID: 171733848702875781}
   - {fileID: 5042655404127083323}
   - {fileID: 7976970825761804939}
+  - {fileID: 8559595033410413758}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -314,7 +388,7 @@ Rigidbody2D:
   m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &5524533528399091876
@@ -356,7 +430,7 @@ MonoBehaviour:
   extraJumps: 0
   dashSpeed: 15
   dashCooldown: 0.5
-  wallSlidingSpeed: 0.1
+  wallSlidingSpeed: 0.25
   groundCheck: {fileID: 5524533529048764277}
   cilingCheck: {fileID: 7958357449251124394}
   frontCheck: {fileID: 3280209171200530534}
@@ -488,6 +562,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 53d2cb29-431e-491b-9761-5c40677751c9
     m_ActionName: Player Movement/Dash[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1586816437168475310}
+        m_TargetAssemblyTypeName: PlayerAbilities, Assembly-CSharp
+        m_MethodName: OnPowerDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d71bf381-963e-498e-b2cf-bdef9750a89a
+    m_ActionName: Player Movement/PowerDash[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player Movement
@@ -507,6 +597,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 500
   healthBar: {fileID: 0}
+--- !u!114 &1586816437168475310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5524533528399091874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cadb8421a723109489275138ebed6852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerDashEffector: {fileID: 0}
+  powerDashSpeed: 30
+  powerDashCooldown: 0.5
 --- !u!1 &5524533529048764278
 GameObject:
   m_ObjectHideFlags: 0

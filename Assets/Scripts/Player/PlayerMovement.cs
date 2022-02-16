@@ -47,13 +47,17 @@ public class PlayerMovement : MonoBehaviour
     private float moveHorizontal;
     
     private bool isGrounded;
-    private bool touchingCiling;
+    private bool isTouchingCiling;
     private bool isTouchingWall;
 
-    private bool wallSliding = false;
+    private bool isWallSliding = false;
     private bool isCrouching = false;
     private bool isDashing = false;
-    private bool canDash = true;
+
+    public static bool canMove = true;
+    public static bool canJump = true;
+    public static bool canCrouch = true;
+    public static bool canDash = true;
 
     private int availableJumps;
     private float originalGravity;
@@ -74,11 +78,12 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 
         // check if the player's head is touching ciling
-        touchingCiling = Physics2D.OverlapCircle(cilingCheck.position, 0.1f, groundLayer);
+        isTouchingCiling = Physics2D.OverlapCircle(cilingCheck.position, 0.1f, groundLayer);
 
         // check if the player is touching a wall
         if(Physics2D.OverlapCircle(frontCheck.position, 0.1f, wallLayer)) {
-            Flip();
+            if(!PlayerAbilities.powerDashActive)
+                Flip();
             isTouchingWall = true;
         }
         else if(Physics2D.OverlapCircle(rearCheck.position, 0.1f, wallLayer)) {
@@ -89,14 +94,22 @@ public class PlayerMovement : MonoBehaviour
 
         // trigger wall sliding
         if(isTouchingWall && !isGrounded) {
-            wallSliding = true;
+            isWallSliding = true;
+
+            canMove = false;
+            canJump = false;
+            canDash = false;
 
             animator.SetBool("IsWallGrabbing", true);
             animator.SetBool("IsJumping", false);
         }
-        else {
-            wallSliding = false;
+        else if(isWallSliding && !isTouchingWall) {
+            isWallSliding = false;
 
+            canMove = true;
+            canJump = true;
+            canDash = true;
+            
             animator.SetBool("IsWallGrabbing", false);
 
             if(!isGrounded) {
@@ -105,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         // movement
-        if (!wallSliding && !isDashing) {
+        if (canMove) {
             if (!isCrouching) {
                 _rigidBody.velocity = new Vector2(moveHorizontal * moveSpeed, _rigidBody.velocity.y);
                 animator.SetFloat("Speed", Mathf.Abs(moveHorizontal)); // trigger run animation 
@@ -116,26 +129,28 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // to make player slide from wall
-        if (wallSliding && !isCrouching) {
+        if (isWallSliding && !isCrouching) {
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, Mathf.Clamp(_rigidBody.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
-        else if (wallSliding && isCrouching) {
+        else if (isWallSliding && isCrouching) {
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, Mathf.Clamp(_rigidBody.velocity.y, -wallSlidingSpeed*2, float.MaxValue));
         }
         
-
         // reset jumps if player is grounded
-        if(isGrounded || wallSliding) {
+        if(isGrounded || isWallSliding) {
             availableJumps = extraJumps;
         }
             
         // reset jump animation
-        if(Mathf.Abs(_rigidBody.velocity.y) <= 0.01) {
+        if(Mathf.Abs(_rigidBody.velocity.y) < 0.04) {
             animator.SetBool("IsJumping", false); // ends jumping animation
+        }
+        else if(Mathf.Abs(_rigidBody.velocity.y) > 0.04 && !isWallSliding) {
+            animator.SetBool("IsJumping", true);
         }
 
         // flipping when necessary
-        if(!facingRight && moveHorizontal > 0 && !wallSliding || facingRight && moveHorizontal < 0 && !wallSliding)
+        if(!facingRight && _rigidBody.velocity.x > 0 && !isWallSliding || facingRight && _rigidBody.velocity.x < 0 && !isWallSliding)
             Flip();
 
     }
@@ -152,19 +167,19 @@ public class PlayerMovement : MonoBehaviour
     
     // jump
     public void OnJump (InputAction.CallbackContext context) {
-        if(context.performed && availableJumps > 0 && !touchingCiling && !wallSliding) {  // for extra jumps
+        if(context.performed && canJump && availableJumps > 0 && !isTouchingCiling) {  // for extra jumps
             _rigidBody.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
             availableJumps--;
 
             SoundManagerScript.PlaySound("jump");
             animator.SetBool("IsJumping", true); // triggers jump animation
         }
-        else if(context.performed && availableJumps == 0 && isGrounded && !touchingCiling && !wallSliding) {  // for single/last jump
+        else if(context.performed && canJump && availableJumps == 0 && isGrounded && !isTouchingCiling) {  // for single/last jump
             _rigidBody.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
 
             animator.SetBool("IsJumping", true); // triggers jump animation
         }
-        else if(context.performed && wallSliding) {   // jump after wall sliding
+        else if(context.performed && isWallSliding) {   // jump after wall sliding
             if (facingRight)
                 _rigidBody.AddForce(new Vector2(wallJumpDistance, jumpHeight), ForceMode2D.Impulse);
             else
@@ -177,25 +192,34 @@ public class PlayerMovement : MonoBehaviour
 
     // crouch
     public void OnCrouch(InputAction.CallbackContext context) {
-        if(context.performed && !wallSliding) {
+        if(context.performed && canCrouch && !isWallSliding) {
             isCrouching = true;
-            animator.SetBool("IsCrouching", true);
+            canDash = false;
+            animator.SetBool("IsCrouching", isCrouching);
         }
-        else if(context.canceled && !touchingCiling && isCrouching) {
+        else if(context.canceled && !isTouchingCiling && isCrouching) {
             isCrouching = false;
-            animator.SetBool("IsCrouching", false);
+            canDash = true;
+            animator.SetBool("IsCrouching", isCrouching);
         }
     }
 
-    // dash
+    // dash input
     public void OnDash(InputAction.CallbackContext context) {
-        if(context.performed && canDash && !isCrouching && !wallSliding) {
+        if(context.performed && canDash) {
             StartCoroutine("Dash");
         }
     }
 
+    // normal dash
     IEnumerator Dash() {
         isDashing = true;
+
+        canMove = false;
+        canJump = false;
+        canCrouch = false;
+        Weapon.DisableWeapon(true);
+
         canDash = false;
         animator.SetBool("IsDashing", isDashing);
         
@@ -209,11 +233,16 @@ public class PlayerMovement : MonoBehaviour
         }
         
         _rigidBody.gravityScale = 0.0f;
-
+        
         yield return new WaitForSeconds(0.2f);
 
         isDashing = false;
         animator.SetBool("IsDashing", isDashing);
+
+        canMove = true;
+        canJump = true;
+        canCrouch = true;
+        Weapon.DisableWeapon(false);
 
         _rigidBody.gravityScale = originalGravity;
 
