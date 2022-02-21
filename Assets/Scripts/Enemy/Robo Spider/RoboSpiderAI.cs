@@ -37,9 +37,15 @@ public class RoboSpiderAI : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void FixedUpdate() {
+        targetDistance = Vector2.Distance(_rigidBody.position, target.position);
+
+        inRange = (targetDistance <= detectionRange) && (targetDistance > attackRange);
+        
+        inAttackRange = (targetDistance <= attackRange);
+
+        animator.SetFloat("Speed", Mathf.Abs(_rigidBody.velocity.x));
+
         // move close if in detection range
         if (inRange) {
             if (_rigidBody.position.x - target.position.x > 0) {
@@ -53,16 +59,6 @@ public class RoboSpiderAI : MonoBehaviour
         if (inAttackRange) {
             StartCoroutine("Explode");
         }
-    }
-
-    void FixedUpdate() {
-        targetDistance = Vector2.Distance(_rigidBody.position, target.position);
-
-        inRange = (targetDistance <= detectionRange) && (targetDistance > attackRange);
-        
-        inAttackRange = (targetDistance <= attackRange);
-
-        animator.SetFloat("Speed", Mathf.Abs(_rigidBody.velocity.x));
 
         // flipping when necessary
         if(!facingRight && _rigidBody.velocity.x > 0 || facingRight && _rigidBody.velocity.x < 0)
@@ -81,6 +77,8 @@ public class RoboSpiderAI : MonoBehaviour
     IEnumerator Explode() {
         explodeIndicator.SetActive(true);
 
+        SoundManager.PlaySound(gameObject.GetComponent<AudioSource>(), SoundManager.EnemySounds.SpiderIgnite, true);
+
         yield return new WaitForSeconds(detonationDelay);
         
         if (inAttackRange) {
@@ -88,13 +86,14 @@ public class RoboSpiderAI : MonoBehaviour
         }
         else {
             explodeIndicator.SetActive(false);
+            SoundManager.PlaySound(gameObject.GetComponent<AudioSource>(), SoundManager.EnemySounds.SpiderIgnite, false);
         }
 
     }
 
     void Detonate() {
-        SoundManagerScript.PlaySound("enemyDeath");
         Destroy(gameObject);
+        SoundManager.PlaySound(SoundManager.EnemySounds.SpiderExplode, transform.position);
 
         CameraShake.Instance.ShakeCamera(0.2f, 0.4f);
         GameObject deathEffectObject = Instantiate(explosionPrefab, transform.position, Quaternion.identity);

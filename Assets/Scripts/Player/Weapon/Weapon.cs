@@ -41,6 +41,7 @@ public class Weapon : MonoBehaviour
             
             var shootobj = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             shootobj.GetComponent<Bullet>().FireStart();
+            SoundManager.PlaySound(SoundManager.PlayerSounds.PlayerShoot);
 
             animator.SetTrigger("Shoot");
             CameraShake.Instance.ShakeCamera(0.1f, 0.1f);

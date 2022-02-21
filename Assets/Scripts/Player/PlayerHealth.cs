@@ -14,11 +14,12 @@ public class PlayerHealth : MonoBehaviour
         healthBar.SetMaxHealth(health);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, SoundManager.FXSounds sound = SoundManager.FXSounds.Damage)
     {
         if(!isInvinsible) {
             currentHealth -= damage;
             healthBar.SetHealth(currentHealth);
+            SoundManager.PlaySound(sound);
 
             if(currentHealth <= 0) {
                 Rigidbody2D player = GetComponent<Rigidbody2D>();

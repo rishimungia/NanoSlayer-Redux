@@ -30,7 +30,8 @@ public class PowerUpHeal : MonoBehaviour
             
             if (playerHealth.Heal()) {
                 Destroy(gameObject);
-
+                SoundManager.PlaySound(SoundManager.PlayerSounds.PlayerHeal);
+                
                 GameObject healEffectObject = Instantiate(healEffect, transform.position, Quaternion.identity);
                 Destroy(healEffectObject, 1.0f);
             }

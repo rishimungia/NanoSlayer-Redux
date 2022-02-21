@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b12a5eb15e713e428c9de3c7f8c2e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeTimer: 1
+  explodeTimer: 0.75
   explodeEffect: {fileID: 1764386194386784117, guid: 1472837986590984c9fc3a47cafc05a2, type: 3}
 --- !u!95 &5819801987295671221
 Animator:

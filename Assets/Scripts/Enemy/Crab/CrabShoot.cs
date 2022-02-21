@@ -27,7 +27,7 @@ public class CrabShoot : MonoBehaviour
         Enemy enemy = hitInfo.GetComponent<Enemy>();
         if(enemy != null)
         {
-            SoundManagerScript.PlaySound("bulletImpact");
+            SoundManager.PlaySound(SoundManager.FXSounds.BulletImpactEnemy);
             enemy.TakeDamage(damage);       // damage enemy
         }
 

@@ -254,7 +254,7 @@ MonoBehaviour:
   jumpForce: 16
   detectionRange: 4
   jumpDelay: 1.5
-  attackDamage: 25
+  attackDamage: 20
   attackJump: {x: 40, y: 7}
   groundCheck: {fileID: 3977706379587351750}
   groundLayer:
@@ -276,5 +276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce0836a10daa574ca1c9827a7572d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 175
+  health: 150
   deathEffect: {fileID: 1764386194386784117, guid: d01f753a6731c5248936b7af0609eaad, type: 3}
+  invincible: 0

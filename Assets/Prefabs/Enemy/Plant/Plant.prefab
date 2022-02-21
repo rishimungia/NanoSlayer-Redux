@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce0836a10daa574ca1c9827a7572d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 250
+  health: 125
   deathEffect: {fileID: 9028360668630775436, guid: 49521009aab0416448a3814755409322, type: 3}
   invincible: 0
 --- !u!114 &2051992536325450133
@@ -190,7 +190,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   attackDamage: 50
-  attackDelay: 1.5
+  attackDelay: 1.25
 --- !u!199 &3993797805121266449
 ParticleSystemRenderer:
   serializedVersion: 6

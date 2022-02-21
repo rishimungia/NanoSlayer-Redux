@@ -54,6 +54,7 @@ public class PlayerAbilities : MonoBehaviour
         Weapon.DisableWeapon(true);
 
         animator.SetBool("IsPowerDashing", powerDashActive);
+        SoundManager.PlaySound(SoundManager.PlayerSounds.PlayerPowerDash);
         
         _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, 0.0f);
 

@@ -50,7 +50,7 @@ public class PlantAI : MonoBehaviour
     IEnumerator Grow() {
         animator.SetTrigger("Grow");
         spawnParticles.Play();
-        
+        SoundManager.PlaySound(SoundManager.EnemySounds.PlantGrow, transform.position);
         isActive = true;
         
         yield return new WaitForSeconds(0.4f);
@@ -61,6 +61,7 @@ public class PlantAI : MonoBehaviour
     IEnumerator Attack() {
         string attackSide = (target.transform.position.x > transform.position.x) ? "AttackRight" : "AttackLeft";
         animator.SetTrigger(attackSide);
+        SoundManager.PlaySound(SoundManager.EnemySounds.PlantAttack);
 
         canAttack = false;
         

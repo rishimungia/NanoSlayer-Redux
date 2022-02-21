@@ -53,11 +53,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isWallSliding = false;
     private bool isCrouching = false;
     private bool isDashing = false;
+    private bool isJumping = false;
 
     public static bool canMove = true;
     public static bool canJump = true;
     public static bool canCrouch = true;
     public static bool canDash = true;
+    public static bool canTeleport = true;
 
     private int availableJumps;
     private float originalGravity;
@@ -121,12 +123,16 @@ public class PlayerMovement : MonoBehaviour
         if (canMove) {
             if (!isCrouching) {
                 _rigidBody.velocity = new Vector2(moveHorizontal * moveSpeed, _rigidBody.velocity.y);
-                animator.SetFloat("Speed", Mathf.Abs(moveHorizontal)); // trigger run animation 
+                animator.SetFloat("Speed", Mathf.Abs(moveHorizontal)); // trigger run animation
             }
             else {
                 _rigidBody.velocity = new Vector2(moveHorizontal * crouchedMoveSpeed, _rigidBody.velocity.y);
             }
         }
+        if(canMove && isGrounded && !isCrouching && _rigidBody.velocity.x != 0.0)   // movement sound
+            SoundManager.PlaySound(gameObject.GetComponent<AudioSource>(), SoundManager.PlayerSounds.PlayerMove, true);
+        else
+            SoundManager.PlaySound(gameObject.GetComponent<AudioSource>(), SoundManager.PlayerSounds.PlayerMove, false);
 
         // to make player slide from wall
         if (isWallSliding && !isCrouching) {
@@ -144,9 +150,17 @@ public class PlayerMovement : MonoBehaviour
         // reset jump animation
         if(Mathf.Abs(_rigidBody.velocity.y) < 0.04) {
             animator.SetBool("IsJumping", false); // ends jumping animation
+            if(isJumping && isGrounded) {
+                SoundManager.PlaySound(SoundManager.PlayerSounds.PlayerJumpLand);
+                isJumping = false;
+            }
         }
         else if(Mathf.Abs(_rigidBody.velocity.y) > 0.04 && !isWallSliding) {
             animator.SetBool("IsJumping", true);
+        }
+
+        if(!isGrounded){
+            isJumping = true;
         }
 
         // flipping when necessary
@@ -171,13 +185,14 @@ public class PlayerMovement : MonoBehaviour
             _rigidBody.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
             availableJumps--;
 
-            SoundManagerScript.PlaySound("jump");
+            // SoundManager.PlaySound(SoundManager.PlayerSounds.PlayerJump);
             animator.SetBool("IsJumping", true); // triggers jump animation
         }
         else if(context.performed && canJump && availableJumps == 0 && isGrounded && !isTouchingCiling) {  // for single/last jump
             _rigidBody.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
 
             animator.SetBool("IsJumping", true); // triggers jump animation
+            // SoundManager.PlaySound(SoundManager.PlayerSounds.PlayerJump);
         }
         else if(context.performed && isWallSliding) {   // jump after wall sliding
             if (facingRight)
@@ -186,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
                 _rigidBody.AddForce(new Vector2(-wallJumpDistance, jumpHeight), ForceMode2D.Impulse);
 
             animator.SetBool("IsJumping", true); // triggers jump animation
-            SoundManagerScript.PlaySound("jump");
+            // SoundManager.PlaySound(SoundManager.PlayerSounds.PlayerJump);
         }
     }
 
@@ -222,6 +237,7 @@ public class PlayerMovement : MonoBehaviour
 
         canDash = false;
         animator.SetBool("IsDashing", isDashing);
+        SoundManager.PlaySound(SoundManager.PlayerSounds.PlayerDash);
         
         _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, 0.0f);
 

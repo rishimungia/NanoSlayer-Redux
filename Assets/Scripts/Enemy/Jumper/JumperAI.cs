@@ -85,7 +85,7 @@ public class JumperAI : MonoBehaviour
     {
         if (isGrounded) {
             _rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            SoundManagerScript.PlaySound("jump");
+            SoundManager.PlaySound(SoundManager.EnemySounds.JumperJump, transform.position);
             animator.SetBool("IsJumping", true);
 
             canAttack = true;

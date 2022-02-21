@@ -25,7 +25,6 @@ public class Bullet : MonoBehaviour
     }
     
     public void FireStart() {
-        SoundManagerScript.PlaySound("shoot");
         _rigidbody = GetComponent<Rigidbody2D>();
         _rigidbody.velocity = transform.right * speed;  // give bullet const velocity
     }
@@ -36,7 +35,6 @@ public class Bullet : MonoBehaviour
         Enemy enemy = hitInfo.GetComponent<Enemy>();
         if(enemy != null)
         {
-            SoundManagerScript.PlaySound("bulletImpact");
             enemy.TakeDamage(damage);       // damage enemy
         }
 
@@ -52,6 +50,12 @@ public class Bullet : MonoBehaviour
             Rigidbody2D prop = hitInfo.gameObject.GetComponent<Rigidbody2D>();
             prop.AddForce(new Vector2(_rigidbody.velocity.x * knockbackX, knockbackY), ForceMode2D.Impulse);
         }
+
+        // bullet impact sound
+        if(hitInfo.tag == "Enemy")
+            SoundManager.PlaySound(SoundManager.FXSounds.BulletImpactEnemy, transform.position);
+        else
+            SoundManager.PlaySound(SoundManager.FXSounds.BulletImpact, transform.position); 
 
         Destroy(gameObject);                // destroy bullet prefab
 

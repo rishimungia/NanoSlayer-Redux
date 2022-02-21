@@ -138,11 +138,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  knockbackX: 1
+  knockbackX: 0.5
   knockbackY: 5
   damage: 25
   impactEffect: {fileID: 2390212986216015807, guid: ed15e0a6751ad79449f8b02e8d8e9c92, type: 3}
-  bulletLifetime: 2.5
+  bulletLifetime: 1.5
 --- !u!1 &3234618913493139172
 GameObject:
   m_ObjectHideFlags: 0

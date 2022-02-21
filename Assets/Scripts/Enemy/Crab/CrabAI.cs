@@ -119,6 +119,7 @@ public class CrabAI : MonoBehaviour
     // function to shoot
     IEnumerator Shoot() {
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        SoundManager.PlaySound(SoundManager.EnemySounds.CrabShoot, firePoint.position);
         canShoot = false;
         yield return new WaitForSeconds(attackDelay);
         canShoot = true;

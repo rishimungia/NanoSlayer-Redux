@@ -26,7 +26,7 @@ public class BarrelExplode : MonoBehaviour
 
         yield return new WaitForSeconds(explodeTimer);
         
-        SoundManagerScript.PlaySound("explode");
+        SoundManager.PlaySound(SoundManager.FXSounds.BarrelExplode, transform.position);
         Destroy(gameObject);
 
         CameraShake.Instance.ShakeCamera(0.5f, 0.5f);

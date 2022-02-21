@@ -162,6 +162,17 @@
                 },
                 {
                     "name": "",
+                    "id": "dcd5f59f-610d-483e-9b87-8f79df9ae3ba",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f6782257-fe77-4244-b8dc-0d98811f2544",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
@@ -196,7 +207,7 @@
                 {
                     "name": "",
                     "id": "45404619-4f5d-4ede-b36e-787ab55fde73",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/shift",
                     "interactions": "Tap",
                     "processors": "",
                     "groups": "",
@@ -207,7 +218,7 @@
                 {
                     "name": "",
                     "id": "ae2797ef-cdaa-4fd0-a295-b30771dbb9d5",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/shift",
                     "interactions": "Hold",
                     "processors": "",
                     "groups": "",

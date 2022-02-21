@@ -249,8 +249,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce0836a10daa574ca1c9827a7572d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 150
+  health: 100
   deathEffect: {fileID: 1764386194386784117, guid: 668c834800729294f823e5d10ca4a703, type: 3}
+  invincible: 0
 --- !u!114 &1951928326591729007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,9 +264,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd42e23aaf2a7b4a93f38c8f4cfc5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
-  detectionRange: 3
-  attackRange: 1.75
+  moveSpeed: 1.75
+  detectionRange: 5
+  attackRange: 2
   escapeRange: 0.75
   wallLayer:
     serializedVersion: 2
@@ -273,7 +274,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  attackDelay: 1
+  attackDelay: 0.75
   firePoint: {fileID: 680282734522446790}
   frontCheck: {fileID: 2914536177547634444}
   bulletPrefab: {fileID: 2802668972854481369, guid: 46184a121a34a2942a5e7b74589cac6e, type: 3}

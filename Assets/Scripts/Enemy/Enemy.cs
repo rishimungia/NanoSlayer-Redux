@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        SoundManagerScript.PlaySound("enemyDeath");
+        SoundManager.PlaySound(SoundManager.EnemySounds.GenericEnemyDeath, transform.position);
 
         Destroy(gameObject);
 

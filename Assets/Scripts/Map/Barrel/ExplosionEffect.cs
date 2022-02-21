@@ -2,9 +2,14 @@
 
 public class ExplosionEffect : MonoBehaviour
 {
-    public int enemyMaxDamage = 100;
-    public int playerMaxDamage = 10;
-    public float explosionForce;
+    [SerializeField]
+    private int enemyMaxDamage = 100;
+    [SerializeField]
+    private int playerMaxDamage = 10;
+    [SerializeField]
+    private float explosionForce;
+    [SerializeField]
+    private float explosionForcePlayer;
 
     private Transform explosionPosition;
 
@@ -19,21 +24,23 @@ public class ExplosionEffect : MonoBehaviour
         Rigidbody2D body = hitInfo.GetComponent<Rigidbody2D>();
         var forceDirection = body.transform.position - explosionPosition.position;
         float wearOff = 1 - forceDirection.magnitude;
-        body.AddForce(forceDirection.normalized * explosionForce * wearOff); 
 
         Enemy enemy = hitInfo.GetComponent<Enemy>();
         if (enemy != null) { 
             enemy.TakeDamage(enemyMaxDamage);       // damage enemy
+            body.AddForce(forceDirection.normalized * explosionForce * wearOff, ForceMode2D.Impulse); 
         }
 
         BarrelExplode barrel = hitInfo.GetComponent<BarrelExplode>();
         if (barrel != null) {
             barrel.TakeDamage();                   // barrel chain reaction
+            body.AddForce(forceDirection.normalized * explosionForce * wearOff, ForceMode2D.Impulse); 
         }
 
         PlayerHealth player = hitInfo.GetComponent<PlayerHealth>();
         if (player != null) {
             player.TakeDamage(playerMaxDamage);     // damage player
+            body.AddForce(new Vector2(explosionForcePlayer * wearOff, 0.0f), ForceMode2D.Impulse); 
         }
     }
 }

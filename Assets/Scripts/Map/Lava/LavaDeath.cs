@@ -43,7 +43,7 @@ public class LavaDeath : MonoBehaviour
     IEnumerator Burn() {
         while(true) {
             CameraShake.Instance.ShakeCamera(0.25f, 0.25f);
-            playerHealth.TakeDamage(damageAmountPlayer);
+            playerHealth.TakeDamage(damageAmountPlayer, SoundManager.FXSounds.LavaDamage);
             yield return new WaitForSeconds(damageDelay);
         }
     }

@@ -10,7 +10,6 @@ public class PowerDashEffector : MonoBehaviour
         Enemy enemy = hitInfo.GetComponent<Enemy>();
         if(enemy != null)
         {
-            SoundManagerScript.PlaySound("bulletImpact");
             enemy.TakeDamage(powerDashDamage);       // damage enemy
         }
 
