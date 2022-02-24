@@ -29,12 +29,14 @@ public class ExplosionEffect : MonoBehaviour
         if (enemy != null) { 
             enemy.TakeDamage(enemyMaxDamage);       // damage enemy
             body.AddForce(forceDirection.normalized * explosionForce * wearOff, ForceMode2D.Impulse); 
+            PlayerAbilities.AddPowerPoints(10);
         }
 
         BarrelExplode barrel = hitInfo.GetComponent<BarrelExplode>();
         if (barrel != null) {
             barrel.TakeDamage();                   // barrel chain reaction
             body.AddForce(forceDirection.normalized * explosionForce * wearOff, ForceMode2D.Impulse); 
+            PlayerAbilities.AddPowerPoints(5);
         }
 
         PlayerHealth player = hitInfo.GetComponent<PlayerHealth>();

@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int health = 100;
-    public HealthUI healthBar;
+    [SerializeField]
+    private int health = 100;
+    [SerializeField]
+    private GameObject healthBarUI;
+
+    private Slider healthBar;
 
     private int currentHealth;
     private static bool isInvinsible = false;
@@ -11,14 +16,17 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = health;
-        healthBar.SetMaxHealth(health);
+        healthBar = healthBarUI.GetComponent<Slider>();
+
+        healthBar.maxValue = health;
+        healthBar.value = health;
     }
 
     public void TakeDamage(int damage, SoundManager.FXSounds sound = SoundManager.FXSounds.Damage)
     {
         if(!isInvinsible) {
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);
+            healthBar.value = currentHealth;
             SoundManager.PlaySound(sound);
 
             if(currentHealth <= 0) {
@@ -33,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
     public bool Heal() {
         if(currentHealth < health) {
             currentHealth = health;
-            healthBar.SetHealth(currentHealth);
+            healthBar.value = currentHealth;
             return true;
         }
         else

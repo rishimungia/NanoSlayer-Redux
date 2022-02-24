@@ -51,36 +51,6 @@ public class CrabAI : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (inAttackRange && canShoot && facingTarget) {
-            StartCoroutine("Shoot");
-        }
-
-        // move close if in detection range
-        if (inRange && !inEscapeRange && !inAttackRange) {
-            if (_rigidBody.position.x - target.position.x > 0) {
-                _rigidBody.velocity = new Vector2(-moveSpeed, 0f);
-            }
-            else {
-                _rigidBody.velocity = new Vector2(moveSpeed, 0f);
-            }
-        }
-
-        // move away if in escape range
-        else if (inEscapeRange && canMove) {
-            if (_rigidBody.position.x - target.position.x > 0) {
-                _rigidBody.velocity = new Vector2(moveSpeed, 0f);
-            }
-            else {
-                _rigidBody.velocity = new Vector2(-moveSpeed, 0f);
-            }
-
-        }
-
-    }
-
     void FixedUpdate()
     {
         targetDistance = Vector2.Distance(_rigidBody.position, target.position);
@@ -93,7 +63,30 @@ public class CrabAI : MonoBehaviour
 
         inAttackRange = (targetDistance <= attackRange);
 
-        Debug.DrawRay(firePoint.position, transform.forward, Color.green);
+        if (inAttackRange && canShoot && facingTarget) {
+            StartCoroutine("Shoot");
+        }
+
+        // move close if in detection range
+        if (inRange && !inEscapeRange && !inAttackRange) {
+            if (_rigidBody.position.x - target.position.x > 0) {
+                _rigidBody.velocity = new Vector2(-moveSpeed, _rigidBody.velocity.y);
+            }
+            else {
+                _rigidBody.velocity = new Vector2(moveSpeed, _rigidBody.velocity.y);
+            }
+        }
+
+        // move away if in escape range
+        else if (inEscapeRange && canMove) {
+            if (_rigidBody.position.x - target.position.x > 0) {
+                _rigidBody.velocity = new Vector2(moveSpeed, _rigidBody.velocity.y);
+            }
+            else {
+                _rigidBody.velocity = new Vector2(-moveSpeed, _rigidBody.velocity.y);
+            }
+
+        }
 
         if (facingRight)
             facingTarget = Physics2D.Raycast(firePoint.position, Vector2.right, detectionRange, targetLayer);

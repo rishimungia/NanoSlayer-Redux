@@ -8,11 +8,21 @@ public class Enemy : MonoBehaviour
     private GameObject deathEffect;      // death effect
     [SerializeField]
     private bool invincible = false;
+    
+    [SerializeField]
+    public int hitScore = 2;
+    [SerializeField]
+    private int killScore = 5;
 
-    public void TakeDamage(int damage)
+    private int playerHits = 0;
+
+    public void TakeDamage(int damage, bool playerHit = false)
     {
         if(!invincible)
             health -= damage;
+
+        if(playerHit) 
+            playerHits += 1;
 
         if(health <= 0)
         {
@@ -23,6 +33,9 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         SoundManager.PlaySound(SoundManager.EnemySounds.GenericEnemyDeath, transform.position);
+
+        PlayerAbilities.AddPowerPoints(playerHits * 5);
+        ScoreManager.Instance.AddScorePoint(killScore);
 
         Destroy(gameObject);
 

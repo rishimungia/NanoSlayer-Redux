@@ -35,13 +35,15 @@ public class Bullet : MonoBehaviour
         Enemy enemy = hitInfo.GetComponent<Enemy>();
         if(enemy != null)
         {
-            enemy.TakeDamage(damage);       // damage enemy
+            enemy.TakeDamage(damage, true);       // damage enemy
+            ScoreManager.Instance.AddScorePoint(enemy.hitScore);
         }
 
         BarrelExplode barrel = hitInfo.GetComponent<BarrelExplode>();
         if(barrel != null)
         {
             barrel.TakeDamage();
+            ScoreManager.Instance.AddScorePoint(2);
         }
 
         // bullet knockback

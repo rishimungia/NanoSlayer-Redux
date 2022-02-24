@@ -1,9 +1,17 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerAbilities : MonoBehaviour
 {
+    [SerializeField]
+    private float maxPowerLevel;
+    [SerializeField]
+    private GameObject powerLevelUI;
+
+    [SerializeField]
+    private int powerDashPoints;
     [SerializeField]
     private BoxCollider2D powerDashEffector;
     [SerializeField]
@@ -13,8 +21,9 @@ public class PlayerAbilities : MonoBehaviour
 
     private Animator animator;
     private Rigidbody2D _rigidBody;
+    private static Slider powerLevelBar;
 
-    private float originalGravity;
+    private static int currentPowerLevel;
 
     private bool canPowerDash = true;
 
@@ -27,15 +36,35 @@ public class PlayerAbilities : MonoBehaviour
         animator = GetComponent<Animator>();
 
         _rigidBody = GetComponent<Rigidbody2D>();
-
-        originalGravity = _rigidBody.gravityScale;
+        
+        powerLevelBar = powerLevelUI.GetComponent<Slider>();
+        powerLevelBar.maxValue = maxPowerLevel;
+        powerLevelBar.value = 0;
+        currentPowerLevel = (int)powerLevelBar.value;
 
         // disable all abilities
         powerDashEffector.enabled = false;
     }
 
+    void FixedUpdate() {
+        if(powerDashActive) {
+             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, 0.0f);
+        }
+    }
+
+    public static void AddPowerPoints(int powerPoints) {
+        powerLevelBar.value += powerPoints;
+        currentPowerLevel = (int)powerLevelBar.value;
+    }
+
+    void UsePowerPoints(int powerPoints) {
+        powerLevelBar.value -= powerPoints;
+        currentPowerLevel = (int)powerLevelBar.value;
+    } 
+
     public void OnPowerDash(InputAction.CallbackContext context) {
-        if (context.performed && PlayerMovement.canDash && canPowerDash) {
+        if (context.performed && canPowerDash && PlayerMovement.canDash && currentPowerLevel >= powerDashPoints) {
+            UsePowerPoints(powerDashPoints);
             StartCoroutine("PowerDash");
         }
     }
@@ -55,8 +84,6 @@ public class PlayerAbilities : MonoBehaviour
 
         animator.SetBool("IsPowerDashing", powerDashActive);
         SoundManager.PlaySound(SoundManager.PlayerSounds.PlayerPowerDash);
-        
-        _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, 0.0f);
 
         float defaultDeltaTime = Time.fixedDeltaTime;
 
@@ -72,7 +99,7 @@ public class PlayerAbilities : MonoBehaviour
             _rigidBody.AddForce(new Vector2(-powerDashSpeed, 0.0f), ForceMode2D.Impulse);
         }
         
-        _rigidBody.gravityScale = 0.0f;
+        // _rigidBody.gravityScale = 0.0f;
 
         yield return new WaitForSeconds(0.5f);
 
@@ -87,7 +114,7 @@ public class PlayerAbilities : MonoBehaviour
         PlayerMovement.canJump = true;
         Weapon.DisableWeapon(false);
 
-        _rigidBody.gravityScale = originalGravity;
+        // _rigidBody.gravityScale = originalGravity;
 
         Time.timeScale = 1.0f;
         Time.fixedDeltaTime = defaultDeltaTime * Time.timeScale;

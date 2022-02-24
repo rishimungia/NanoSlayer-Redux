@@ -6,15 +6,18 @@ public class SpawnController : MonoBehaviour
     private int maxEnemies;                 // max number of enemies to spawn at once
     [SerializeField]
     private int enemySpawnDelay;
-    [SerializeField]
-    private GameObject[] enemySpawnPoints;  // available enemy spawn points
+    private EnemySpawner[] enemySpawnPoints;  // available enemy spawn points
 
     [SerializeField]
     private int maxProps;                   // max number of props to spawn at once
     [SerializeField]
     private int propSpawnDelay;
+    private PropSpawner[] propSpawnPoints;   // available prop spawn points
+
     [SerializeField]
-    private GameObject[] propSpawnPoints;   // available prop spawn points
+    private LayerMask enemyCheckMask;
+    [SerializeField]
+    private LayerMask propCheckMask;
 
     private int totalEnemiesAlive;          // current enemies in scene
     private int totalPropsAvailable;        // current props in scene
@@ -26,6 +29,9 @@ public class SpawnController : MonoBehaviour
     {
         InvokeRepeating("RandomEnemySpawner", 0f, enemySpawnDelay);
         InvokeRepeating("RandomPropSpawner", 0f, propSpawnDelay);
+
+        propSpawnPoints = GameObject.FindObjectsOfType<PropSpawner>();
+        enemySpawnPoints = GameObject.FindObjectsOfType<EnemySpawner>();
     }
 
     void FixedUpdate()
@@ -41,7 +47,7 @@ public class SpawnController : MonoBehaviour
     {
         if (totalEnemiesAlive < maxEnemies) {
             randomSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
-            enemySpawnPoints[randomSpawnPoint].GetComponent<EnemySpawner>().SpawnEnemy();
+            enemySpawnPoints[randomSpawnPoint].GetComponent<EnemySpawner>().SpawnEnemy(enemyCheckMask, 2.0f);
         }
     }
 
@@ -49,7 +55,7 @@ public class SpawnController : MonoBehaviour
     {
         if(totalPropsAvailable < maxProps) {
             randomSpawnPoint = Random.Range(0, propSpawnPoints.Length);
-            propSpawnPoints[randomSpawnPoint].GetComponent<PropSpawner>().SpawnProps();
+            propSpawnPoints[randomSpawnPoint].GetComponent<PropSpawner>().SpawnProps(propCheckMask, 2.0f);
         }
     }
 }

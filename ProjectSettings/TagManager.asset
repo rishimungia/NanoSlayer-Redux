@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - Sword
-  - ShotgunPoint
   - FirePoint
   - Barrel
   - Wall
@@ -21,7 +19,7 @@ TagManager:
   - Enemy
   - Player
   - Enemy Plus
-  - 
+  - Props
   - Wall
   - Powerups
   - Portal
@@ -76,4 +74,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 2809538209
+    locked: 0
+  - name: UI
+    uniqueID: 2211843985
     locked: 0

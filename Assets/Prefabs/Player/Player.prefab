@@ -259,9 +259,9 @@ GameObject:
   - component: {fileID: 5524533528399091876}
   - component: {fileID: 5524533528399091873}
   - component: {fileID: 5524533528399091883}
-  - component: {fileID: 4120148857124856568}
   - component: {fileID: -8500153484352749338}
   - component: {fileID: 1586816437168475310}
+  - component: {fileID: 3167519288577611338}
   - component: {fileID: 3089189605089315237}
   m_Layer: 8
   m_Name: Player
@@ -438,7 +438,7 @@ MonoBehaviour:
   rearCheck: {fileID: 171733848702875781}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 40960
+    m_Bits: 41984
   wallLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -458,7 +458,39 @@ MonoBehaviour:
   firePoint: {fileID: 5524533527487291414}
   bulletPrefab: {fileID: 1686644200837447621, guid: 26ed9873e3b19ad4ba75fe74cc6ac04d, type: 3}
   fireDelay: 0.2
---- !u!114 &4120148857124856568
+--- !u!114 &-8500153484352749338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5524533528399091874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72f7cb535122334d83832972a52f92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 250
+  healthBarUI: {fileID: 0}
+--- !u!114 &1586816437168475310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5524533528399091874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cadb8421a723109489275138ebed6852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxPowerLevel: 100
+  powerLevelUI: {fileID: 0}
+  powerDashPoints: 50
+  powerDashEffector: {fileID: 8756074768192309142}
+  powerDashSpeed: 30
+  powerDashCooldown: 0.5
+--- !u!114 &3167519288577611338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -546,7 +578,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 1f9b7841-5a3b-45c6-9f5b-e510a3ab8d47
-    m_ActionName: Player Movement/Shoot[/Keyboard/ctrl,/Mouse/leftButton]
+    m_ActionName: Player Movement/Shoot[/Mouse/leftButton,/Keyboard/x]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5524533528399091873}
@@ -562,7 +594,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 53d2cb29-431e-491b-9761-5c40677751c9
-    m_ActionName: Player Movement/Dash[/Keyboard/e]
+    m_ActionName: Player Movement/Dash[/Keyboard/shift]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1586816437168475310}
@@ -578,41 +610,16 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: d71bf381-963e-498e-b2cf-bdef9750a89a
-    m_ActionName: Player Movement/PowerDash[/Keyboard/e]
+    m_ActionName: Player Movement/PowerDash[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1e5124a5-981a-433d-a81e-4bcb7a051775
+    m_ActionName: Game Management/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Default
   m_DefaultActionMap: Player Movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &-8500153484352749338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5524533528399091874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f72f7cb535122334d83832972a52f92c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 250
-  healthBar: {fileID: 0}
---- !u!114 &1586816437168475310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5524533528399091874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cadb8421a723109489275138ebed6852, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerDashEffector: {fileID: 8756074768192309142}
-  powerDashSpeed: 30
-  powerDashCooldown: 0.5
 --- !u!82 &3089189605089315237
 AudioSource:
   m_ObjectHideFlags: 0

@@ -227,7 +227,52 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Game Management",
+            "id": "f8162130-ca3b-4d32-ae5c-842fa77cc104",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "1e5124a5-981a-433d-a81e-4bcb7a051775",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "83228634-6eab-4482-b3e2-fe663d8feda5",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Default",
+            "bindingGroup": "Default",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }

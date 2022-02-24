@@ -777,7 +777,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 516003464352889654}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -35.126816, y: -6.35124, z: -10.000047}
+  m_LocalPosition: {x: -35.875954, y: -6.35232, z: -10.000047}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -817,7 +817,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3222338487
+    m_Bits: 2147483647
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1142,7 +1142,7 @@ MonoBehaviour:
     ModeOverride: 1
     LensShift: {x: 0, y: 0}
     GateFit: 1
-    m_SensorSize: {x: 2.4673574, y: 1}
+    m_SensorSize: {x: 1.779304, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1447,6 +1447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4829286778717808972}
   - component: {fileID: 101744806329702148}
+  - component: {fileID: 3906223007821404721}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1481,8 +1482,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb456fb64c132c448b54bef71a5f6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  pauseMenuUI: {fileID: 0}
   restartDelay: 1
+--- !u!114 &3906223007821404721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743270950356008200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: dc608b67d6e480b48846e5f4f37cbac0, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 78315be9-3aed-4ba9-ae0f-e48aeee38a3d
+    m_ActionName: Player Movement/Move[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: de40982d-49cb-4849-8fb8-3ff0cb92e2ed
+    m_ActionName: Player Movement/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0efc3b0d-86dc-42d7-9e08-ea81976ad57f
+    m_ActionName: Player Movement/Crouch[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1f9b7841-5a3b-45c6-9f5b-e510a3ab8d47
+    m_ActionName: Player Movement/Shoot[/Mouse/leftButton,/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 53d2cb29-431e-491b-9761-5c40677751c9
+    m_ActionName: Player Movement/Dash[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d71bf381-963e-498e-b2cf-bdef9750a89a
+    m_ActionName: Player Movement/PowerDash[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 101744806329702148}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1e5124a5-981a-433d-a81e-4bcb7a051775
+    m_ActionName: Game Management/Pause[/Keyboard/e]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Game Management
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &2933038697666642662
 GameObject:
   m_ObjectHideFlags: 0
