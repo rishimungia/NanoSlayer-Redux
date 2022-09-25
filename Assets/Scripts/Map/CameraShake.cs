@@ -22,6 +22,7 @@ public class CameraShake : MonoBehaviour
     }
 
     IEnumerator shake(float shakeIntensity, float shakeTime) {
+        // Debug.Log("Shake");     
         CinemachineBasicMultiChannelPerlin vCamPerlin = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         vCamPerlin.m_AmplitudeGain = shakeIntensity;

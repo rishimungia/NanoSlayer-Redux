@@ -48,7 +48,7 @@ public class PlayerAbilities : MonoBehaviour
 
     void FixedUpdate() {
         if(powerDashActive) {
-             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, 0.0f);
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, 0.0f);
         }
     }
 

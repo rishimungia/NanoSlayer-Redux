@@ -84,9 +84,10 @@ public class PlayerMovement : MonoBehaviour
 
         // check if the player is touching a wall
         if(Physics2D.OverlapCircle(frontCheck.position, 0.1f, wallLayer)) {
-            if(!PlayerAbilities.powerDashActive)
+            if(!PlayerAbilities.powerDashActive) {
                 Flip();
-            isTouchingWall = true;
+                isTouchingWall = true;
+            }
         }
         else if(Physics2D.OverlapCircle(rearCheck.position, 0.1f, wallLayer)) {
             isTouchingWall = true;
@@ -164,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // flipping when necessary
-        if(!facingRight && _rigidBody.velocity.x > 0 && !isWallSliding || facingRight && _rigidBody.velocity.x < 0 && !isWallSliding)
+        if(!facingRight && _rigidBody.velocity.x > 0 && !isWallSliding  || facingRight && _rigidBody.velocity.x < 0 && !isWallSliding)
             Flip();
 
     }
